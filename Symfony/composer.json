@@ -30,7 +30,10 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^2.7"
+        "symfony/phpunit-bridge": "^2.7",
+        "phpmd/phpmd" : "@stable",
+        "sebastian/phpcpd": "*",
+        "phpunit/phpunit": "5.1.*"
     },
     "scripts": {
         "post-install-cmd": [
