@@ -1,0 +1,9 @@
+global_exclude_dirs:
+    - Symfony/app
+    - Symfony/bin
+    - Symfony/var
+    - Symfony/vendor
+    - Symfony/web
+
+exclude_patterns:
+    - Symfony/src/.htaccess
