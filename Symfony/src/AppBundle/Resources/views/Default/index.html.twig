@@ -1,6 +1,4 @@
 <html>
-<head>
-</head>
 <body>
     
     <div id="hexSelection">
@@ -20,9 +18,7 @@
             <option value='{"protocol":"","maximum_size":"","speed":""}'>
                 Select a board
             </option>
-
         </select>
-
     
         <div id='editor_holder'></div>
         
@@ -35,13 +31,12 @@
     </div>
     <div id="ispConfig" style="display:none;">
         <h2>Select ISP</h2>
-            <select id="cb_cf_programmers" class="dropdown" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Programmers">
+            <select id="cb_cf_programmers" class="dropdown">
             </select>
         </pre>
     </div>
     <div id="ispConfig" style="display:none;">
-        <select id="cb_cf_ports" class="dropdown" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Ports" style="width: 310.5px;">
-            
+        <select id="cb_cf_ports" class="dropdown">
         </select>
     </div>
     <div id="buttonNameSelection" style="display:none;">
@@ -85,221 +80,10 @@
 
     <link rel='stylesheet' href="css/bootstrap-slider.css">
     <script src="js/bootstrap-slider.js"></script>
-
-
-    <style>
-    .select2-results {
-        max-height: 400px;
-        height: 400px;
-    }
-    .select2-container--default .select2-results>.select2-results__options
-    {
-        max-height: 400px;
-        height: 400px;
-    }
-    
-    </style>
-    
-    <!--<script type="text/javascript">-->
-    <!--    $(document).ready( function()-->
-    <!--    {-->
-    <!--        $("*").show()-->
-    <!--    });-->
-    <!--</script>-->
-    
-    <script type="text/javascript">
-        window.flashConfig = {};
-    </script>
-
-    <script type="text/javascript">
-    $(document).ready( function()
-    {
-        filepicker.setKey("AlFbsJlKCTImNl6LUUZOzz");
-
-        filepicker.pickAndStore(
-            {
-                container: 'uploadFileModal',
-                extension: '.hex',
-                services: ['COMPUTER'],
-                multiple: false
-            },
-            {
-                path: '/hex_files/user_id/'
-            },
-            function(Blobs)
-            {
-                console.log(JSON.stringify(Blobs));
-                console.log(Blobs);
-                console.log(Blobs[0].url);
-                
-                window.flashConfig.url=Blobs[0].url;
-
-                $("#hexSelection").hide();
-                $("#selectedFile").val(Blobs[0].filename);
-                $("#hexShow").show();
-
-                $("#configSelection").show();
-            }
-        );
-        
-    }
-    );
-    </script>
+    {% include 'js.html' %}
+    {% include 'css.html' %}
 
     <script>
-    $(document).ready( function()
-    {
-        $('#boardslist').select2();
-    });
-
-    $(document).ready( function()
-    {   
-        var boardOptions = null;
-        window.jsonEditor = new JSONEditor(document.getElementById('editor_holder'),
-        {
-            schema: {
-                title: "Board Config",
-                type: "object",
-                properties: {}},
-                theme: 'bootstrap3',
-                // disable_properties: true,
-                disable_edit_json: true,
-                disable_collapse: true
-            });
-            
-            
-        
-            window.jsonEditor.setValue(JSON.parse('{"protocol":"","maximum_size":"","speed":""}'));
-        
-            $.get("https://codebender.cc/board/listboards", function(data)
-            {
-                            
-                window.boards = JSON.parse(data);
-                // console.log(data);
-                // console.log(window.boards);
-        
-                for (var k in window.boards)
-                {
-                    if (window.boards.hasOwnProperty(k))
-                    {
-                        // console.log(k);
-                        $('#boardslist').append($('<optgroup>', { 
-                            label: k,
-                            id : k.replace(/ /g,'')
-                        }));
-                    
-                        // console.log(window.boards[k]);
-               
-                        for(i = 0; i < window.boards[k].length; i++)
-                        {
-                            // console.log(window.boards[k][i]['name']);
-                            $('#'+k.replace(/ /g,'')).append($('<option>', { 
-                                value: JSON.stringify(window.boards[k][i]['upload']),
-                                text : window.boards[k][i]['name']
-                            }));
-                        }
-               
-                    }
-                }
-            
-            });     
-    
-        });
-
-    $(document).ready( function()
-    {   
-        $.get("https://codebender.cc/board/programmers", function(data)
-        {
-                        
-            window.programmers = JSON.parse(data);
-            // console.log(data);
-            // console.log(window.boards);
-    
-            for (var k in window.programmers)
-            {
-                if (window.programmers.hasOwnProperty(k))
-                {
-                    // console.log(k);
-                    $('#cb_cf_programmers').append($('<optgroup>', { 
-                        label: k,
-                        id : k.replace(/ /g,'')
-                    }));
-                
-                    // console.log(window.boards[k]);
-           
-                    for(i = 0; i < window.programmers[k].length; i++)
-                    {
-                        // console.log(window.boards[k][i]['name']);
-                        $('#'+k.replace(/ /g,'')).append($('<option>', { 
-                            value: JSON.stringify(window.programmers[k][i]['name']),
-                            text : window.programmers[k][i]['name']
-                        }));
-                    }
-           
-                }
-            }
-        
-        });     
-
-    });
-
-        function valueChanged()
-        {
-            console.log($( "#boardslist option:selected" ).text());
-            console.log($( "#boardslist option:selected" ).val());
-            boardOptions = JSON.parse($( "#boardslist option:selected" ).val());
-            console.log(typeof boardOptions.protocol != "undefined");
-            window.jsonEditor.setValue(JSON.parse($( "#boardslist option:selected" ).val()));
-        }
-        
-        function saveConfig()
-        {
-            window.flashConfig.boardConfig = JSON.stringify(window.jsonEditor.getValue());
-            
-            $("#configSelection").hide();
-            $("#selectedConfigOutput").text(JSON.stringify(window.jsonEditor.getValue(), null, 2));
-            $("#configShow").show();
-            if(typeof boardOptions.protocol == "undefined") $("#ispConfig").show();
-            
-            $("#buttonNameSelection").show();
-        }
-
-        </script>
-    
-        <script>
-        
-        function updateButtonName()
-        {
-            $("#buttonNameButton").text($("#buttonName").val());
-            $("#buttonNameShowButton").text($("#buttonName").val());
-        }
-
-        function saveButtonName()
-        {
-            window.flashConfig.buttonName = $("#buttonName").val();
-
-            $("#buttonNameSelection").hide();
-            $("#buttonNameShow").show();
-            
-            initIframeConfig();
-            
-            $("#iframeStyleSelection").show();
-        }
-
-        </script>
-        
-        <script type="text/javascript">
-            function initIframeConfig()
-            {
-                $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
-                $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
-                $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
-                $("#iframeDemo").contents().find('#startInitialization').val("true");
-                $("#iframeDemo").contents().find('#startInitialization').change();
-            }
-        </script>
-        
-        <script>
         // With JQuery
         $("#iframeWidthSlider").slider({
             tooltip: 'always'
@@ -316,8 +100,7 @@
         $("#iframeHeightSlider").on("slide", function(slideEvt) {
             $("#iframeDemo").css('height', slideEvt.value);
         });
-        
-        </script>
+    </script>
 
     </body>
-    </html>
+</html>
