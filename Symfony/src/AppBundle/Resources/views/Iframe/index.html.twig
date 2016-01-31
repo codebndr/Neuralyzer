@@ -21,7 +21,6 @@ $(document).ready(function(){
 </script>
 
 <script>
-
 window.initializationStarted = false;
 
 function checkForInitialization()
@@ -35,6 +34,13 @@ function checkForInitialization()
 
 function startInitialization()
 {
+	compilerflasher.selectedBoard = {};
+	compilerflasher.selectedBoard.name = $('#boardName').val();
+	compilerflasher.selectedBoard.upload = JSON.parse($("#boardConfig").val());
+	if($('#programmerCommunication').val() == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
+		$('#cb_cf_ports').show();
+	}
+
 	window.initializationStarted = true;
 	
 	$("#loadingDiv").show(500);
@@ -85,7 +91,11 @@ $(document).ready(function()
 </style>
 
 <body>
-
+	<select id="cb_cf_ports" style="width: 100%;display: none;">
+		<option>
+			Select a Comm Port
+		</option>
+	</select>
 
 	<div id="loadingDiv" style="display: none;">
 		<i class="fa fa-spinner fa-spin fa-5x"></i>
@@ -104,6 +114,8 @@ $(document).ready(function()
 	    <input type="text" id="boardConfig"></input>
 	
 	    <input type="text" id="buttonName"></input>
+
+		<input type="text" id="programmerCommunication"></input>
 	
 	    <input type="text" id="startInitialization" onChange="checkForInitialization()" val="false"></input>
 	
