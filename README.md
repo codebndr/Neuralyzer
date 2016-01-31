@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/codebendercc/Neuralyzer.svg?branch=master)](https://travis-ci.org/codebendercc/Neuralyzer) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f/mini.png)](https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f)
+[![Build Status](https://travis-ci.org/codebendercc/Neuralyzer.svg?branch=master)](https://travis-ci.org/codebendercc/Neuralyzer) [![Coverage Status](https://coveralls.io/repos/github/codebendercc/Neuralyzer/badge.svg?branch=master)](https://coveralls.io/github/codebendercc/Neuralyzer?branch=master)
+ [![SensioLabsInsight](https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f/mini.png)](https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f)
 
 ### Installation Instructions
 
