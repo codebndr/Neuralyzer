@@ -12,9 +12,13 @@ before_script:
 
 
 script:
-  - vendor/bin/phpunit -c .
+  - vendor/bin/phpunit -c . --coverage-clover clover.xml
   - vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
   - vendor/bin/phpcpd src/
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
+
 
 notifications:
   irc: "chat.freenode.net#codebender.cc"
