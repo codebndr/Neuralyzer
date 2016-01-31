@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis>
+  <link href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/8" rel="self" type="application/vnd.com.sensiolabs.insight+xml"/>
+  <link href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/8/status" rel="status" type="application/vnd.com.sensiolabs.insight+xml"/>
+  <link href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f" rel="project" type="application/vnd.com.sensiolabs.insight+xml"/>
+  <link href="https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/8" rel="self" type="text/html"/>
+  <status><![CDATA[finished]]></status>
+  <violations>
+    <violation severity="info" category="codestyle">
+      <line>117</line>
+      <resource><![CDATA[Symfony/src/AppBundle/Resources/views/Iframe/index.html.twig]]></resource>
+      <title>Text files should end with a newline character</title>
+      <message><![CDATA[This file ends with no newline character. It won't render properly on a terminal, and it's considered a bad practice. Add a simple line feed as the last character to fix it.]]></message>
+      <context start-line="112" end-line="117"><![CDATA[	</div>
+
+
+
+
+</body>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/8?status=new#374513080" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="minor" category="codestyle">
+      <line>0</line>
+      <title>Templates should not be too long</title>
+      <message><![CDATA[50% of all your templates have more than 200 lines, the threshold is 5%.]]></message>
+      <context/>
+      <link href="https://insight.sensiolabs.com/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/8?status=new#374513079" rel="self" type="text/html"/>
+    </violation>
+  </violations>
+  <grades>
+    <entry><![CDATA[none]]></entry>
+    <entry><![CDATA[bronze]]></entry>
+    <entry><![CDATA[silver]]></entry>
+    <entry><![CDATA[gold]]></entry>
+    <entry><![CDATA[platinum]]></entry>
+  </grades>
+  <failed>false</failed>
+  <grade><![CDATA[silver]]></grade>
+  <next-grade><![CDATA[gold]]></next-grade>
+  <begin-at><![CDATA[2016-01-31T04:48:25+0100]]></begin-at>
+  <end-at><![CDATA[2016-01-31T04:48:57+0100]]></end-at>
+  <duration>8</duration>
+  <number>8</number>
+  <altered>false</altered>
+  <remediation-cost>1.25</remediation-cost>
+  <nb-violations>2</nb-violations>
+  <reference><![CDATA[3673cfbcf4f733f86de97e184b6124d82158c89e]]></reference>
+  <launched-by><![CDATA[tzikis]]></launched-by>
+  <configuration>
+    <ignored-branches>
+      <branch><![CDATA[gh-pages]]></branch>
+    </ignored-branches>
+    <pre-composer-script/>
+    <post-composer-script/>
+    <php-version/>
+    <php-ini/>
+    <global-excluded-dirs>
+      <dir><![CDATA[vendor]]></dir>
+      <dir><![CDATA[vendors]]></dir>
+      <dir><![CDATA[test]]></dir>
+      <dir><![CDATA[tests]]></dir>
+      <dir><![CDATA[Tests]]></dir>
+      <dir><![CDATA[spec]]></dir>
+      <dir><![CDATA[features]]></dir>
+      <dir><![CDATA[Fixtures]]></dir>
+      <dir><![CDATA[DataFixtures]]></dir>
+      <dir><![CDATA[var]]></dir>
+    </global-excluded-dirs>
+    <excluded-patterns>
+      <pattern><![CDATA[app/check.php]]></pattern>
+      <pattern><![CDATA[app/SymfonyRequirements.php]]></pattern>
+      <pattern><![CDATA[web/config.php]]></pattern>
+      <pattern><![CDATA[web/app_*.php]]></pattern>
+    </excluded-patterns>
+    <patterns>
+      <file>
+        <pattern><![CDATA[*.php]]></pattern>
+        <pattern><![CDATA[*.twig]]></pattern>
+        <pattern><![CDATA[*.xml]]></pattern>
+        <pattern><![CDATA[*.yml]]></pattern>
+        <pattern><![CDATA[*.yaml]]></pattern>
+        <pattern><![CDATA[*.ini]]></pattern>
+        <pattern><![CDATA[*.dist]]></pattern>
+        <pattern><![CDATA[*.sql]]></pattern>
+        <pattern><![CDATA[composer.*]]></pattern>
+        <pattern><![CDATA[.gitignore]]></pattern>
+        <pattern><![CDATA[license]]></pattern>
+        <pattern><![CDATA[LICENSE]]></pattern>
+        <pattern><![CDATA[readme]]></pattern>
+        <pattern><![CDATA[README]]></pattern>
+        <pattern><![CDATA[makefile]]></pattern>
+        <pattern><![CDATA[Makefile]]></pattern>
+        <pattern><![CDATA[.htaccess]]></pattern>
+      </file>
+      <php>
+        <pattern><![CDATA[*.php]]></pattern>
+      </php>
+      <twig>
+        <pattern><![CDATA[*.twig]]></pattern>
+      </twig>
+    </patterns>
+    <rules/>
+    <parameters>
+      <parameter name="project_type">12</parameter>
+    </parameters>
+    <env/>
+  </configuration>
+  <previous-analyses-references>
+    <analysis-reference number="8">3673cfbcf4f733f86de97e184b6124d82158c89e</analysis-reference>
+    <analysis-reference number="7">517011551595c56e0e63496eae1c6eb352ad2e5b</analysis-reference>
+    <analysis-reference number="6">0e7602af42f7ffce4a6ffd224d81c96d8a7c2746</analysis-reference>
+    <analysis-reference number="5">802685b8aaa4007471c7cb4ab1ed4e53f74fb1b8</analysis-reference>
+  </previous-analyses-references>
+  <nb-violations-new>2</nb-violations-new>
+  <nb-violations-existing>0</nb-violations-existing>
+  <nb-violations-fixed>2</nb-violations-fixed>
+  <nb-violations-ignored>0</nb-violations-ignored>
+</analysis>
