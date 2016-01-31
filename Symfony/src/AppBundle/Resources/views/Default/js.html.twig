@@ -2,9 +2,7 @@
 window.flashConfig = {};
 
 $(document).ready( function()
-{   
-    window.compilerflasher = new compilerflasher(function(){});
-
+{
     filepicker.setKey("AlFbsJlKCTImNl6LUUZOzz");
 
     filepicker.pickAndStore(
@@ -85,7 +83,15 @@ $(document).ready( function()
     $.get("https://codebender.cc/board/programmers", function(data)
     {       
         window.programmers = JSON.parse(data);
-        $("#cb_cf_programmers option[value='Parallel Programmer']").remove();
+        for(i = 0; i < window.programmers.length; i++)
+        {
+            if(window.programmers[i].name != 'Parallel Programmer') {
+                $('#cb_cf_programmers').append($('<option>', {
+                    value: JSON.stringify(window.programmers[i]),
+                    text: window.programmers[i]['name']
+                }));
+            }
+        }
     }); 
 });
 
@@ -99,15 +105,7 @@ function valueChanged()
 
 function ispValueChanged()
 {
-    for(i = 0; i < window.programmers.length; i++)
-    {
-        var name = $( "#cb_cf_programmers option:selected" ).val();
-        if(name == window.programmers[i]['name']) 
-        { 
-            window.boardOptions.programmer = window.programmers[i];
-            break; 
-        }
-    }
+    window.boardOptions.programmer = JSON.parse($( "#cb_cf_programmers option:selected" ).val());
 }
 
 function saveConfig()
@@ -146,6 +144,9 @@ function initIframeConfig()
     $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
     $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
     $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
+    if(window.boardOptions.programmer) {
+        $("#iframeDemo").contents().find('#programmerCommunication').val(window.boardOptions.programmer.communication);
+    }
     $("#iframeDemo").contents().find('#startInitialization').val("true");
     $("#iframeDemo").contents().find('#startInitialization').change();
 }
