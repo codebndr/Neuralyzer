@@ -28,7 +28,7 @@ This will ssh you into the VM that you just created, so that you can run Symfony
 #### 4. Connect to the website from your Host computer
 
 * Open your browser of choice
-* Open ```localhost:8889/app.php```
+* Open ```localhost:8889/```
 * Enjoy
 
 
