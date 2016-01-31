@@ -31,7 +31,7 @@ This will ssh you into the VM that you just created, so that you can run Symfony
 
 Note: The Symfony Web server runs locally on port 8000. However, we have an nginx server running as a reverse proxy on port 8080, that forward the requests to the Symfony Web Server. On top of that, Vagrant is set up to forward port 8080 of the Guest VM to port 8889 of the Host machine, so for all intents and purposes, that's what you should use
 
-Note #2: You should also be able to use ```localhost:8889/app_dev.php/``` that uses a dev environment, but you will have to comment out a section of code that only accepts requests from the local machine. This will (mostly) not use cache, and it will give you a good error output that helps with development
+Note #2: You should also be able to use ```localhost:8889/app_dev.php/``` that uses a dev environment. This will (mostly) not use cache, and it will give you a good error output that helps with development
 
 ##### 5. Make Changes and Commit
 
