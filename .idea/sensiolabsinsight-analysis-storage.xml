@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SensioLabsInsightAnalysisStorage">
+    <option name="analysesList">
+      <list>
+        <InsightAnalysis duration="8" href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/8" nbViolations="2" nextGrade="GOLD" number="8" reference="3673cfbcf4f733f86de97e184b6124d82158c89e" remediationCostForNextGrade="-1" status="finished" />
+        <InsightAnalysis duration="3" href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/7" nbViolations="2" nextGrade="SILVER" number="7" reference="517011551595c56e0e63496eae1c6eb352ad2e5b" remediationCostForNextGrade="-1" status="finished" />
+        <InsightAnalysis duration="3" href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/6" nbViolations="2" nextGrade="SILVER" number="6" reference="0e7602af42f7ffce4a6ffd224d81c96d8a7c2746" remediationCostForNextGrade="-1" status="finished" />
+        <InsightAnalysis duration="3" href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/5" nbViolations="11" nextGrade="SILVER" number="5" reference="802685b8aaa4007471c7cb4ab1ed4e53f74fb1b8" remediationCostForNextGrade="-1" status="finished" />
+        <InsightAnalysis href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/4" number="4" remediationCostForNextGrade="-1" status="finished">
+          <option name="failed" value="true" />
+        </InsightAnalysis>
+        <InsightAnalysis href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/3" number="3" remediationCostForNextGrade="-1" status="finished">
+          <option name="failed" value="true" />
+        </InsightAnalysis>
+        <InsightAnalysis href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/2" number="2" remediationCostForNextGrade="-1" status="finished">
+          <option name="failed" value="true" />
+        </InsightAnalysis>
+        <InsightAnalysis duration="-1" href="https://insight.sensiolabs.com/api/projects/9f967040-04c6-49ba-9952-4a9997413c5f/analyses/1" number="1" remediationCostForNextGrade="-1" status="finished">
+          <option name="failed" value="true" />
+        </InsightAnalysis>
+      </list>
+    </option>
+  </component>
+</project>
