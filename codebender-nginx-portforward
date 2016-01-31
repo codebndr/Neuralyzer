@@ -1,0 +1,16 @@
+# This file just sets up a port forward for nginx to the Symfony's server
+# Port 80 is usually taken up by apache or whatever builtin web server is running, so we are using port 8080 as the external port
+# And we are routing that to port 8000, which is the default port for Symfony's server:run command
+# This way we can expose Symfony's server to the host computer easily
+
+server {
+    listen 8080;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

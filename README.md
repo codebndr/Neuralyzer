@@ -1,30 +1,38 @@
+### Installation Instructions
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
+#### 1. Run the Vagrant file
 
+This tutorial assumes that you have Vagrant installed
 
-Hi there! Welcome to Cloud9 IDE!
+* Clone the project
+* Go to the project's directory
+* Run ```vagrant up```
 
-To get you started, we have created a small hello world application.
+This will create a new VM instance with Ubuntu Trusty (14.04 LTS), install all dependencies, and initialize the Symfony installation
 
-1) Open the hello-world.php file
+#### 2. Connect to the VM
 
-2) Follow the run instructions in the file's comments
+* Run ```vagrant ssh```
 
-3) If you want to look at the Apache logs, check out ~/lib/apache2/log
+This will ssh you into the VM that you just created, so that you can run Symfony's PHP Web Server
 
-And that's all there is to it! Just have fun. Go ahead and edit the code, 
-or add new files. It's all up to you! 
+#### 3. Run the Symfony Web Server
 
-Happy coding!
-The Cloud9 IDE team
+* Run ```cd /vagrant/Symfony``` to go to the Symfony folder
+* Run ```php bin/console server:run``` to run the Symfony Web Server
 
 
-## Support & Documentation
+#### 4. Connect to the website from your Host computer
 
-Visit http://docs.c9.io for support, or to learn more about using Cloud9 IDE. 
-To watch some training videos, visit http://www.youtube.com/user/c9ide
+* Open your browser of choice
+* Open ```localhost:8889/app.php```
+* Enjoy
+
+
+Note: The Symfony Web server runs locally on port 8000. However, we have an nginx server running as a reverse proxy on port 8080, that forward the requests to the Symfony Web Server. On top of that, Vagrant is set up to forward port 8080 of the Guest VM to port 8889 of the Host machine, so for all intents and purposes, that's what you should use
+
+Note #2: You should also be able to use ```localhost:8889/app_dev.php/``` that uses a dev environment, but you will have to comment out a section of code that only accepts requests from the local machine. This will (mostly) not use cache, and it will give you a good error output that helps with development
+
+##### 5. Make Changes and Commit
+
+Using this setup, you are supposed to make changes on your host machine, and use the VM just to look at the end results. So all development and commits should be done at the host

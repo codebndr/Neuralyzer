@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", guest: 80, host: 8888
-  config.vm.network "forwarded_port", guest: 8000, host: 8889
+  config.vm.network "forwarded_port", guest: 8080, host: 8889
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -53,14 +53,21 @@ Vagrant.configure(2) do |config|
     sudo add-apt-repository ppa:ondrej/php5-5.6 -y
   
     sudo apt-get update
-    sudo apt-get install -y acl curl git php5 php5-cli php5-intl php5-curl php5-mysqlnd php5-sqlite apache2 mysql-client-5.6
+    sudo apt-get install -y acl curl git php5 php5-cli php5-intl php5-curl php5-mysqlnd php5-sqlite apache2 nginx mysql-client-5.6
     DEBIAN_FRONTEND=noninteractive sudo -E apt-get -y install mysql-server-5.6
 
     cd /vagrant/Symfony
-    
+
     curl -sS https://getcomposer.org/installer | php
     
+    sudo chown -R vagrant:vagrant var
     ./composer.phar install
-    
+    sudo chown -R vagrant:vagrant var
+
+    sudo cp /vagrant/codebender-nginx-portforward /etc/nginx/sites-available/
+    sudo ln -s /etc/nginx/sites-available/codebender-nginx-portforward /etc/nginx/sites-enabled/codebender-nginx-portforward
+    sudo rm /etc/nginx/sites-enabled/default
+    sudo service nginx restart
+
   SHELL
 end
