@@ -15,3 +15,11 @@ script:
   - vendor/bin/phpunit -c .
   - vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
   - vendor/bin/phpcpd src/
+
+notifications:
+  irc: "chat.freenode.net#codebender.cc"
+  email:
+    recipients:
+      - girder@codebender.cc
+  slack:
+    secure: JKGrALsULcD+Wr2tWsE4SrFJ3JodCmtRF5ITVCnhAqChgu8nMAy6wm3n0GWLDccIyJqFtZT49KwYgWQ9gK67bilQoYdhdaVgkjDng6/NTp8gD8E2oM88OZKMcmNraLm9bVGaL3YgWLThDrraZRnE1FnWOjIOanISJAoH4TrT6vs=
