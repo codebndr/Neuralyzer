@@ -8,7 +8,8 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings custom_loader_path="" phpunit_phar_path="" use_configuration_file="true" />
-      <phpunit_by_interpreter interpreter_id="46655998-9ff3-4569-a0c9-6427c5368dbd" interpreter_name="Remote PHP 5.6  (Vagrant)" load_method="CUSTOM_LOADER" configuration_file_path="/vagrant/Symfony/phpunit.xml.dist" custom_loader_path="/vagrant/Symfony/vendor/bin/phpunit" phpunit_phar_path="" use_configuration_file="true" />
+      <phpunit_by_interpreter interpreter_id="46655998-9ff3-4569-a0c9-6427c5368dbd" load_method="CUSTOM_LOADER" configuration_file_path="/vagrant/Symfony/phpunit.xml.dist" custom_loader_path="/vagrant/Symfony/vendor/bin/phpunit" phpunit_phar_path="" use_configuration_file="true" />
+      <phpunit_by_interpreter interpreter_id="fef285f9-2ce7-4497-a377-3d4b3462da15" interpreter_name="Remote PHP 5.6 Vagrant" load_method="CUSTOM_LOADER" configuration_file_path="/vagrant/Symfony/phpunit.xml.dist" custom_loader_path="/vagrant/Symfony/vendor/bin/phpunit" phpunit_phar_path="" use_configuration_file="true" />
     </phpunit_settings>
   </component>
 </project>
