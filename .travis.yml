@@ -1,0 +1,17 @@
+language: php
+php:
+  - '5.6'
+  - '7.0'
+
+before_script: 
+  - cd Symfony/
+  - curl -sS https://getcomposer.org/installer | php
+  - sudo chown -R `whoami`:`whoami` var
+  - ./composer.phar install
+  - sudo chown -R `whoami`:`whoami` var
+
+
+script:
+  - vendor/bin/phpunit -c .
+  - vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
+  - vendor/bin/phpcpd src/
