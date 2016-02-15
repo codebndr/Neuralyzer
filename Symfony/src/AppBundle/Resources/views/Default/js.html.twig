@@ -7,7 +7,7 @@
         filepicker.pickAndStore(
                 {
                     container: 'uploadFileModal',
-                    extension: '.hex',
+                    extension: ['.hex','.ino'], //todo: remove .ino after flash hex done
                     services: ['COMPUTER'],
                     multiple: false
                 },
