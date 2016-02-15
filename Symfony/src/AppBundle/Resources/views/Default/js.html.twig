@@ -20,6 +20,9 @@
                     console.log(Blobs[0].url);
 
                     window.flashConfig.url = Blobs[0].url;
+                    $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
+                    $("#iframeDemo").contents().find('#initCompiler').val("true");
+                    $("#iframeDemo").contents().find('#initCompiler').change();
 
                     $("#hexSelection").hide();
                     $("#selectedFile").val(Blobs[0].filename);
@@ -66,7 +69,8 @@
                         // console.log(window.boards[k][i]['name']);
                         $('#' + k.replace(/ /g, '')).append($('<option>', {
                             value: JSON.stringify(window.boards[k][i]['upload']),
-                            text: window.boards[k][i]['name']
+                            text: window.boards[k][i]['name'],
+                            build: JSON.stringify(window.boards[k][i]['build'])
                         }));
                     }
 
@@ -91,6 +95,7 @@
         window.boardOptions = {};
         window.boardOptions.name = $("#boardslist option:selected").text();
         window.boardOptions.upload = $("#boardslist option:selected").val();
+        window.boardOptions.build = $("#boardslist option:selected").attr('build');
         window.jsonEditor.setValue(JSON.parse(window.boardOptions.upload));
     }
 
@@ -126,9 +131,10 @@
     }
 
     function initIframeConfig() {
-        $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
         $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
         $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
+        $("#iframeDemo").contents().find('#boardBuild').val(window.boardOptions.build);
+        console.log(window.boardOptions.build);
         $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
         if (window.boardOptions.programmer) {
             $("#iframeDemo").contents().find('#programmerCommunication').val(window.boardOptions.programmer.communication);

@@ -34,6 +34,7 @@
         compilerflasher.selectedBoard = {};
         compilerflasher.selectedBoard.name = $('#boardName').val();
         compilerflasher.selectedBoard.upload = JSON.parse($("#boardConfig").val());
+        compilerflasher.selectedBoard.build = JSON.parse($("#boardBuild").val());
         if ($('#programmerCommunication').val() == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
             $('#cb_cf_ports').show();
         }
@@ -106,11 +107,17 @@
 
     <input type="text" id="boardConfig"></input>
 
+    <input type="text" id="boardBuild"></input>
+
+    <input type="text" id="boardName"></input>
+
     <input type="text" id="buttonName"></input>
 
     <input type="text" id="programmerCommunication"></input>
 
     <input type="text" id="startInitialization" onChange="checkForInitialization()" val="false"></input>
+
+    <input type="text" id="initCompiler" onChange="initCompiler()" val="false"></input>
 
     <textarea id="hexFileContents"></textarea>
 
