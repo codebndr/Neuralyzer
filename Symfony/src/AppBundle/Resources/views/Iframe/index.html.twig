@@ -1,111 +1,29 @@
 <html>
 <head>
-
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
     <link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-    <script type="text/javascript" src="//codebender.cc/embed/compilerflasher.js"></script>
-
+    {% include 'AppBundle:Iframe:iframe.css.html.twig' %}
 </head>
-<script>
-    function initCompiler(){
-        $.get($("#hexFileUrl").val(), function (data) {
-            window.compilerflasher = new compilerflasher(function () {
-                return {
-                    "uploaded.ino" : data
-                }
-            });
-            console.log(data);
-        });
-    }
-</script>
-
-<script>
-    window.initializationStarted = false;
-
-    function checkForInitialization() {
-        if ($("#startInitialization").val() == "true" && window.initializationStarted == false) {
-            startInitialization();
-        }
-
-    }
-
-    function startInitialization() {
-        compilerflasher.selectedBoard = {};
-        compilerflasher.selectedBoard.name = $('#boardName').val();
-        compilerflasher.selectedBoard.upload = JSON.parse($("#boardConfig").val());
-        compilerflasher.selectedBoard.build = JSON.parse($("#boardBuild").val());
-        if ($('#programmerCommunication').val() == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
-            $('#cb_cf_ports').show();
-        }
-
-        window.initializationStarted = true;
-
-        $("#loadingDiv").show(500);
-
-        $("#cb_cf_flash_btn").text($("#buttonName").val());
-
-        window.boardConfig = JSON.parse($("#boardConfig").val());
-
-       $.get($("#hexFileUrl").val(), function (data) {
-           $("#cb_cf_flash_btn").removeAttr('disabled');
-           $("#loadingDiv").hide(500);
-           $("#cb_cf").show(500);
-       });
-
-    }
-
-    $(document).ready(function () {
-        checkForInitialization();
-
-        $("#startInitialization").on("input", function () {
-            console.log("Input changed");
-            checkForInitialization();
-        });
-
-    });
-
-</script>
-
-<script>
-
-    $(document).ready(function () {
-        //window.compilerflasher = new compilerflasher(function(){});
-    });
-
-</script>
-
-
-<style>
-    #hiddenElements {
-        display: none;
-    }
-</style>
 
 <body>
-<select id="cb_cf_ports" style="width: 100%;display: none;">
+<select id="cb_cf_ports" class="hidden">
     <option>
         Select a Comm Port
     </option>
 </select>
 
-<div id="loadingDiv" style="display: none;">
+<div id="loadingDiv">
     <i class="fa fa-spinner fa-spin fa-5x"></i>
 </div>
 
-<div id="cb_cf" style="display: none;">
+<div id="cb_cf" >
     <button id="cb_cf_flash_btn" class="btn btn-default" disabled>
         Run on Arduino
     </button>
     <p id="cb_cf_operation_output"></p>
 </div>
 
-<div id="hiddenElements">
+<div class="hidden">
     <input type="text" id="hexFileUrl"></input>
 
     <input type="text" id="boardConfig"></input>
@@ -125,5 +43,8 @@
     <textarea id="hexFileContents"></textarea>
 
 </div>
-
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="//codebender.cc/embed/compilerflasher.js"></script>
+{% include 'AppBundle:Iframe:iframe.js.html.twig' %}
 </body>
