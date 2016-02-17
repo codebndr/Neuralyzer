@@ -1,16 +1,22 @@
 <html>
+<head>
+    <link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet"/>
+    <link rel='stylesheet' href="css/bootstrap-slider.css">
+    {% include 'AppBundle:Default:css.html.twig' %}
+</head>
 <body>
 <div id="hexSelection">
     <h2>Upload .hex file</h2>
-    <iframe id='uploadFileModal' style="width:100%; height:600px; border: 0px;"></iframe>
+    <iframe id='uploadFileModal'></iframe>
 </div>
 
-<div id="hexShow" style="display:none;">
+<div id="hexShow" class="hidden">
     <h2>Uploaded .hex file</h2>
     <input class="form-control" id="selectedFile" type="text" disabled/>
 </div>
 
-<div id="configSelection" style="display:none;">
+<div id="configSelection" class="hidden">
 
     <h2>Select Board</h2>
     <select id="boardslist" onChange="valueChanged()" style="width: 100%">
@@ -23,21 +29,21 @@
 
     <button class="btn btn-default" onClick='saveConfig()'>Next</button>
 </div>
-<div id="configShow" style="display:none;">
+<div id="configShow" class="hidden">
     <h2>Selected Config</h2>
         <pre id=selectedConfigOutput>
         </pre>
 </div>
-<div id="ispConfig" style="display:none;">
+<div id="ispConfig" class="hidden">
     <h2>Select ISP</h2>
     <select id="cb_cf_programmers" class="dropdown" onChange="ispValueChanged()">
     </select>
 </div>
-<div id="portConfig" style="display:none;">
+<div id="portConfig" class="hidden">
     <select id="cb_cf_ports" class="dropdown">
     </select>
 </div>
-<div id="buttonNameSelection" style="display:none;">
+<div id="buttonNameSelection" class="hidden">
     <h2>Select Button Name</h2>
     <input id="buttonName" class="form-control" type="text" value="Run" onChange="updateButtonName()"
            onClick="updateButtonName()" onKeyUp="updateButtonName()"/>
@@ -49,12 +55,12 @@
 
 </div>
 
-<div id="buttonNameShow" style="display:none;">
+<div id="buttonNameShow" class="hidden">
     <h2>Selected Button</h2>
     <button id="buttonNameShowButton" class="btn btn-default">Run</button>
 </div>
 
-<div id="iframeStyleSelection" style="display:none;">
+<div id="iframeStyleSelection" class="hidden">
     <h2>Selected Style</h2>
     <form>
         <label>Width: </label>
@@ -69,39 +75,12 @@
     <iframe id="iframeDemo" src="{{ path('iframe_index') }}"></iframe>
 </div>
 
-<link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-
 <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="js/jsoneditor.min.js"></script>
-
 <script type="text/javascript" src="//api.filepicker.io/v2/filepicker.js"></script>
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet"/>
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-
-<link rel='stylesheet' href="css/bootstrap-slider.css">
 <script src="js/bootstrap-slider.js"></script>
 {% include 'AppBundle:Default:js.html.twig' %}
-{% include 'AppBundle:Default:css.html.twig' %}
-
-<script>
-    // With JQuery
-    $("#iframeWidthSlider").slider({
-        tooltip: 'always'
-    });
-
-    $("#iframeWidthSlider").on("slide", function (slideEvt) {
-        $("#iframeDemo").css('width', slideEvt.value);
-    });
-
-    $("#iframeHeightSlider").slider({
-        tooltip: 'always'
-    });
-
-    $("#iframeHeightSlider").on("slide", function (slideEvt) {
-        $("#iframeDemo").css('height', slideEvt.value);
-    });
-</script>
 
 </body>
 </html>
