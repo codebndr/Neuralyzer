@@ -1,119 +1,114 @@
 <html>
 <head>
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
 
-    <link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
-    <script type="text/javascript" src="//codebender.cc/embed/compilerflasher.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<script type="text/javascript" src="//codebender.cc/embed/compilerflasher.js"></script>
 
 </head>
 <script>
-    $(document).ready(function () {
-        window.compilerflasher = new compilerflasher(function () {
-        });
-    });
-
-</script>
-
-<script>
-    window.initializationStarted = false;
-
-    function checkForInitialization() {
-        if ($("#startInitialization").val() == "true" && window.initializationStarted == false) {
-            startInitialization();
-        }
-
-    }
-
-    function startInitialization() {
-        compilerflasher.selectedBoard = {};
-        compilerflasher.selectedBoard.name = $('#boardName').val();
-        compilerflasher.selectedBoard.upload = JSON.parse($("#boardConfig").val());
-        if ($('#programmerCommunication').val() == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
-            $('#cb_cf_ports').show();
-        }
-
-        window.initializationStarted = true;
-
-        $("#loadingDiv").show(500);
-
-        $("#cb_cf_flash_btn").text($("#buttonName").val());
-
-        window.boardConfig = JSON.parse($("#boardConfig").val());
-
-        $.get($("#hexFileUrl").val(), function (data) {
-            console.log(data);
-            $("#hexFileContents").val(data);
-            $("#cb_cf_flash_btn").removeAttr('disabled');
-            $("#loadingDiv").hide(500);
-            $("#cb_cf").show(500);
-
-        });
-    }
-
-    $(document).ready(function () {
-        checkForInitialization();
-
-        $("#startInitialization").on("input", function () {
-            console.log("Input changed");
-            checkForInitialization();
-        });
-
-    });
+$(document).ready(function(){
+   window.compilerflasher = new compilerflasher(function(){});
+   });
 
 </script>
 
 <script>
 
-    $(document).ready(function () {
-        //window.compilerflasher = new compilerflasher(function(){});
-    });
+window.initializationStarted = false;
+
+function checkForInitialization()
+{
+	if($("#startInitialization").val() == "true" && window.initializationStarted == false)
+	{
+		startInitialization();
+	}
+	
+}
+
+function startInitialization()
+{
+	window.initializationStarted = true;
+	
+	$("#loadingDiv").show(500);
+	
+	$("#cb_cf_flash_btn").text($("#buttonName").val());
+	
+	window.boardConfig = JSON.parse($("#boardConfig").val());
+	
+	$.get($("#hexFileUrl").val(), function(data)
+	{
+		console.log(data);
+		$("#hexFileContents").val(data);
+		$("#cb_cf_flash_btn").removeAttr('disabled');
+		$("#loadingDiv").hide(500);
+		$("#cb_cf").show(500);
+		
+	});
+}
+
+$(document).ready(function()
+{
+   checkForInitialization();
+   
+	$("#startInitialization").on("input", function(){
+		console.log("Input changed");
+		checkForInitialization();
+	});
+
+});
+
+</script>
+
+<script>
+
+	$(document).ready(function()
+	{
+	   //window.compilerflasher = new compilerflasher(function(){});
+   });
 
 </script>
 
 
 <style>
-    #hiddenElements {
-        display: none;
-    }
+	#hiddenElements
+	{
+		display: none;
+	}
 </style>
 
 <body>
-<select id="cb_cf_ports" style="width: 100%;display: none;">
-    <option>
-        Select a Comm Port
-    </option>
-</select>
 
-<div id="loadingDiv" style="display: none;">
-    <i class="fa fa-spinner fa-spin fa-5x"></i>
-</div>
 
-<div id="cb_cf" style="display: none;">
-    <button id="cb_cf_flash_btn" class="btn btn-default" disabled>
-        Run on Arduino
-    </button>
-    <p id="cb_cf_operation_output"></p>
-</div>
+	<div id="loadingDiv" style="display: none;">
+		<i class="fa fa-spinner fa-spin fa-5x"></i>
+	</div>
 
-<div id="hiddenElements">
-    <input type="text" id="hexFileUrl"></input>
+    <div id="cb_cf" style="display: none;">
+        <button id="cb_cf_flash_btn" class="btn btn-default" disabled>
+            Run on Arduino
+        </button>
+        <p id="cb_cf_operation_output"></p>
+    </div>
 
-    <input type="text" id="boardConfig"></input>
-
-    <input type="text" id="buttonName"></input>
-
-    <input type="text" id="programmerCommunication"></input>
-
-    <input type="text" id="startInitialization" onChange="checkForInitialization()" val="false"></input>
-
-    <textarea id="hexFileContents"></textarea>
-
-</div>
+	<div id="hiddenElements">
+	    <input type="text" id="hexFileUrl"></input>
+	
+	    <input type="text" id="boardConfig"></input>
+	
+	    <input type="text" id="buttonName"></input>
+	
+	    <input type="text" id="startInitialization" onChange="checkForInitialization()" val="false"></input>
+	
+	    <textarea id="hexFileContents"></textarea>
+		
+	</div>
 
 </body>

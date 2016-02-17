@@ -1,140 +1,153 @@
 <script type="text/javascript">
-    window.flashConfig = {};
+window.flashConfig = {};
 
-    $(document).ready(function () {
-        filepicker.setKey("AlFbsJlKCTImNl6LUUZOzz");
+$(document).ready( function()
+{   
+    window.compilerflasher = new compilerflasher(function(){});
 
-        filepicker.pickAndStore(
-                {
-                    container: 'uploadFileModal',
-                    extension: '.hex',
-                    services: ['COMPUTER'],
-                    multiple: false
-                },
-                {
-                    path: '/hex_files/user_id/'
-                },
-                function (Blobs) {
-                    console.log(JSON.stringify(Blobs));
-                    console.log(Blobs);
-                    console.log(Blobs[0].url);
+    filepicker.setKey("AlFbsJlKCTImNl6LUUZOzz");
 
-                    window.flashConfig.url = Blobs[0].url;
+    filepicker.pickAndStore(
+        {
+            container: 'uploadFileModal',
+            extension: '.hex',
+            services: ['COMPUTER'],
+            multiple: false
+        },
+        {
+            path: '/hex_files/user_id/'
+        },
+        function(Blobs)
+        {
+            console.log(JSON.stringify(Blobs));
+            console.log(Blobs);
+            console.log(Blobs[0].url);
+            
+            window.flashConfig.url=Blobs[0].url;
 
-                    $("#hexSelection").hide();
-                    $("#selectedFile").val(Blobs[0].filename);
-                    $("#hexShow").show();
+            $("#hexSelection").hide();
+            $("#selectedFile").val(Blobs[0].filename);
+            $("#hexShow").show();
 
-                    $("#configSelection").show();
-                }
-        );
-
-        $('#boardslist').select2();
-        window.jsonEditor = new JSONEditor(document.getElementById('editor_holder'),
-                {
-                    schema: {
-                        title: "Board Config",
-                        type: "object",
-                        properties: {}
-                    },
-                    theme: 'bootstrap3',
-                    // disable_properties: true,
-                    disable_edit_json: true,
-                    disable_collapse: true
-                });
-
-
-        window.jsonEditor.setValue(JSON.parse('{"protocol":"","maximum_size":"","speed":""}'));
-
-        $.get("https://codebender.cc/board/listboards", function (data) {
-
-            window.boards = JSON.parse(data);
-            // console.log(data);
-            // console.log(window.boards);
-
-            for (var k in window.boards) {
-                if (window.boards.hasOwnProperty(k)) {
-                    // console.log(k);
-                    $('#boardslist').append($('<optgroup>', {
-                        label: k,
-                        id: k.replace(/ /g, '')
-                    }));
-
-                    // console.log(window.boards[k]);
-
-                    for (i = 0; i < window.boards[k].length; i++) {
-                        // console.log(window.boards[k][i]['name']);
-                        $('#' + k.replace(/ /g, '')).append($('<option>', {
-                            value: JSON.stringify(window.boards[k][i]['upload']),
-                            text: window.boards[k][i]['name']
-                        }));
-                    }
-
-                }
-            }
-        });
-
-        $.get("https://codebender.cc/board/programmers", function (data) {
-            window.programmers = JSON.parse(data);
-            for (i = 0; i < window.programmers.length; i++) {
-                if (window.programmers[i].name != 'Parallel Programmer') {
-                    $('#cb_cf_programmers').append($('<option>', {
-                        value: JSON.stringify(window.programmers[i]),
-                        text: window.programmers[i]['name']
-                    }));
-                }
-            }
-        });
-    });
-
-    function valueChanged() {
-        window.boardOptions = {};
-        window.boardOptions.name = $("#boardslist option:selected").text();
-        window.boardOptions.upload = $("#boardslist option:selected").val();
-        window.jsonEditor.setValue(JSON.parse(window.boardOptions.upload));
-    }
-
-    function ispValueChanged() {
-        window.boardOptions.programmer = JSON.parse($("#cb_cf_programmers option:selected").val());
-    }
-
-    function saveConfig() {
-        window.flashConfig.boardConfig = JSON.stringify(window.jsonEditor.getValue());
-
-        $("#configSelection").hide();
-        $("#selectedConfigOutput").text(JSON.stringify(window.jsonEditor.getValue(), null, 2));
-        $("#configShow").show();
-        if (typeof window.jsonEditor.getValue().protocol == "undefined") $("#ispConfig").show();
-
-        $("#buttonNameSelection").show();
-    }
-
-    function updateButtonName() {
-        $("#buttonNameButton").text($("#buttonName").val());
-        $("#buttonNameShowButton").text($("#buttonName").val());
-    }
-
-    function saveButtonName() {
-        window.flashConfig.buttonName = $("#buttonName").val();
-
-        $("#buttonNameSelection").hide();
-        $("#buttonNameShow").show();
-
-        initIframeConfig();
-
-        $("#iframeStyleSelection").show();
-    }
-
-    function initIframeConfig() {
-        $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
-        $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
-        $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
-        $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
-        if (window.boardOptions.programmer) {
-            $("#iframeDemo").contents().find('#programmerCommunication').val(window.boardOptions.programmer.communication);
+            $("#configSelection").show();
         }
-        $("#iframeDemo").contents().find('#startInitialization').val("true");
-        $("#iframeDemo").contents().find('#startInitialization').change();
+    );
+
+    $('#boardslist').select2();
+    window.jsonEditor = new JSONEditor(document.getElementById('editor_holder'),
+    {
+        schema: {
+            title: "Board Config",
+            type: "object",
+            properties: {}},
+            theme: 'bootstrap3',
+            // disable_properties: true,
+            disable_edit_json: true,
+            disable_collapse: true
+    });
+        
+        
+    
+    window.jsonEditor.setValue(JSON.parse('{"protocol":"","maximum_size":"","speed":""}'));
+
+    $.get("https://codebender.cc/board/listboards", function(data)
+    {
+                    
+        window.boards = JSON.parse(data);
+        // console.log(data);
+        // console.log(window.boards);
+
+        for (var k in window.boards)
+        {
+            if (window.boards.hasOwnProperty(k))
+            {
+                // console.log(k);
+                $('#boardslist').append($('<optgroup>', { 
+                    label: k,
+                    id : k.replace(/ /g,'')
+                }));
+            
+                // console.log(window.boards[k]);
+       
+                for(i = 0; i < window.boards[k].length; i++)
+                {
+                    // console.log(window.boards[k][i]['name']);
+                    $('#'+k.replace(/ /g,'')).append($('<option>', { 
+                        value: JSON.stringify(window.boards[k][i]['upload']),
+                        text : window.boards[k][i]['name']
+                    }));
+                }
+       
+            }
+        }
+    }); 
+
+    $.get("https://codebender.cc/board/programmers", function(data)
+    {       
+        window.programmers = JSON.parse(data);
+        $("#cb_cf_programmers option[value='Parallel Programmer']").remove();
+    }); 
+});
+
+function valueChanged()
+{
+    window.boardOptions = {};
+    window.boardOptions.name = $( "#boardslist option:selected" ).text();
+    window.boardOptions.upload = $( "#boardslist option:selected" ).val();
+    window.jsonEditor.setValue(JSON.parse(window.boardOptions.upload));
+}
+
+function ispValueChanged()
+{
+    for(i = 0; i < window.programmers.length; i++)
+    {
+        var name = $( "#cb_cf_programmers option:selected" ).val();
+        if(name == window.programmers[i]['name']) 
+        { 
+            window.boardOptions.programmer = window.programmers[i];
+            break; 
+        }
     }
+}
+
+function saveConfig()
+{
+    window.flashConfig.boardConfig = JSON.stringify(window.jsonEditor.getValue());
+    
+    $("#configSelection").hide();
+    $("#selectedConfigOutput").text(JSON.stringify(window.jsonEditor.getValue(), null, 2));
+    $("#configShow").show();
+    if(typeof window.jsonEditor.getValue().protocol == "undefined") $("#ispConfig").show();
+    
+    $("#buttonNameSelection").show();
+}
+
+function updateButtonName()
+{
+    $("#buttonNameButton").text($("#buttonName").val());
+    $("#buttonNameShowButton").text($("#buttonName").val());
+}
+
+function saveButtonName()
+{
+    window.flashConfig.buttonName = $("#buttonName").val();
+
+    $("#buttonNameSelection").hide();
+    $("#buttonNameShow").show();
+    
+    initIframeConfig();
+    
+    $("#iframeStyleSelection").show();
+}
+
+function initIframeConfig()
+{
+    $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
+    $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
+    $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
+    $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
+    $("#iframeDemo").contents().find('#startInitialization').val("true");
+    $("#iframeDemo").contents().find('#startInitialization').change();
+}
 
 </script>
