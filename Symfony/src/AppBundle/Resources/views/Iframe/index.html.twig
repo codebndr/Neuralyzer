@@ -13,10 +13,15 @@
 
 </head>
 <script>
-    $(document).ready(function () {
-        window.compilerflasher = new compilerflasher(function () {
+    function initCompiler() {
+        $.get($("#hexFileUrl").val(), function (data) {
+            window.compilerflasher = new compilerflasher(function () {
+                return {
+                    "uploaded.ino": data
+                }
+            });
         });
-    });
+    }
 
 </script>
 
@@ -48,8 +53,6 @@
         window.boardConfig = JSON.parse($("#boardConfig").val());
 
         $.get($("#hexFileUrl").val(), function (data) {
-            console.log(data);
-            $("#hexFileContents").val(data);
             $("#cb_cf_flash_btn").removeAttr('disabled');
             $("#loadingDiv").hide(500);
             $("#cb_cf").show(500);
