@@ -41,7 +41,6 @@
                         properties: {}
                     },
                     theme: 'bootstrap3',
-                    // disable_properties: true,
                     disable_edit_json: true,
                     disable_collapse: true
                 });
@@ -52,8 +51,6 @@
         $.get("https://codebender.cc/board/listboards", function (data) {
 
             window.boards = JSON.parse(data);
-            // console.log(data);
-            // console.log(window.boards);
 
             for (var k in window.boards) {
                 if (window.boards.hasOwnProperty(k)) {
@@ -63,10 +60,7 @@
                         id: k.replace(/ /g, '')
                     }));
 
-                    // console.log(window.boards[k]);
-
                     for (i = 0; i < window.boards[k].length; i++) {
-                        // console.log(window.boards[k][i]['name']);
                         $('#' + k.replace(/ /g, '')).append($('<option>', {
                             value: JSON.stringify(window.boards[k][i]['upload']),
                             text: window.boards[k][i]['name'],
