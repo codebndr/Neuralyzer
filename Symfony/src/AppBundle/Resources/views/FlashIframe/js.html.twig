@@ -1,0 +1,46 @@
+<script>
+    $(document).ready(function () {
+        window.compilerflasher = new compilerflasher(function () {
+        });
+    });
+
+    window.initializationStarted = false;
+
+    function checkForInitialization() {
+        if ($("#startInitialization").val() == "true" && window.initializationStarted == false) {
+            startInitialization();
+        }
+    }
+
+    function startInitialization() {
+        compilerflasher.selectedBoard = {};
+        compilerflasher.selectedBoard.name = $('#boardName').val();
+        compilerflasher.selectedBoard.upload = JSON.parse($("#boardConfig").val());
+        if ($('#programmerCommunication').val() == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
+            $('#cb_cf_ports').show();
+        }
+
+        window.initializationStarted = true;
+
+        $("#loadingDiv").show(500);
+
+        $("#cb_cf_flash_btn").text($("#buttonName").val());
+
+        window.boardConfig = JSON.parse($("#boardConfig").val());
+
+        $.get($("#hexFileUrl").val(), function (data) {
+            $("#hexFileContents").val(data);
+            $("#cb_cf_flash_btn").removeAttr('disabled');
+            $("#loadingDiv").hide(500);
+            $("#cb_cf").show(500);
+        });
+    }
+
+    $(document).ready(function () {
+        checkForInitialization();
+        $("#startInitialization").on("input", function () {
+            checkForInitialization();
+        });
+    });
+
+</script>
