@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Form\RegistrationType;
+use AppBundle\Form\Type\RegistrationType;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,17 +14,12 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $user = new User();
+        $user = $this->newUser();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-            $user->setSuccessfulFlashCount(0);
-            $user->setFailedFlashCount(0);
-            $user->setTotalFlashCount(0);
-            $user->setTier(0);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -37,9 +32,16 @@ class RegisterController extends Controller
             <?php
         }
 
-        return $this->render(
-            'AppBundle:Register:index.html.twig',
-            array('form' => $form->createView())
-        );
+        return $this->render('AppBundle:Register:index.html.twig', array('form' => $form->createView()));
+    }
+
+    public function newUser()
+    {
+        $user = new User();
+        $user->setSuccessfulFlashCount(0);
+        $user->setFailedFlashCount(0);
+        $user->setTotalFlashCount(0);
+        $user->setTier(0);
+        return $user;
     }
 }
