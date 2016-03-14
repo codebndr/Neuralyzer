@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class LandingController extends Controller
 {
     /**
-    * @Route("/")
+    * @Route("/", name="index")
     */
     public function showAction()
     {
