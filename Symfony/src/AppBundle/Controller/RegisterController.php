@@ -14,12 +14,12 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $user = $this->newUser();
+        $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+            $user->setPassword($password)->setSuccessfulFlashCount(0)->setFailedFlashCount(0)->setTotalFlashCount(0)->setTier(0);
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -33,15 +33,5 @@ class RegisterController extends Controller
         }
 
         return $this->render('AppBundle:Register:index.html.twig', array('form' => $form->createView()));
-    }
-
-    public function newUser()
-    {
-        $user = new User();
-        $user->setSuccessfulFlashCount(0);
-        $user->setFailedFlashCount(0);
-        $user->setTotalFlashCount(0);
-        $user->setTier(0);
-        return $user;
     }
 }
