@@ -70,7 +70,7 @@ class UserDatabaseTest extends KernelTestCase
         $this->assertCount(1, $users);
         $this->assertEquals('FooBar', $users[0]->getUsername());
         $this->assertEquals('foobar@bar.com', $users[0]->getEmail());
-        $this->assertNotEquals('foobar123', $users[0]->getPassword());
+        $this->assertEquals('foobar123', $users[0]->getPassword());
         $this->assertEquals(1, $users[0]->getTier());
         $this->assertEquals(10, $users[0]->getTotalFlashCount());
         $this->assertEquals(9, $users[0]->getSuccessfulFlashCount());
