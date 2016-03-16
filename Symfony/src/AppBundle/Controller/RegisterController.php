@@ -27,7 +27,7 @@ class RegisterController extends Controller
             ?>
             <script type="text/javascript">
                 alert("The user account has been registered.");
-                window.location.href = "../"
+                window.location.href = "../";
             </script>
             <?php
         }
