@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -25,6 +26,11 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     *
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Your username must be at least {{ limit }} characters long"
+     * )
      */
     private $username;
 
@@ -32,6 +38,11 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     *
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Your email must be at least {{ limit }} characters long"
+     * )
      */
     private $email;
 
@@ -46,6 +57,11 @@ class User implements UserInterface, \Serializable
      * @var int
      *
      * @ORM\Column(name="tier", type="integer")
+     *
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Your password must be at least {{ limit }} characters long"
+     * )
      */
     private $tier;
 

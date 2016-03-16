@@ -18,35 +18,35 @@
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder':'User Name'}}) }}
+                                    {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder':'User Name', 'pattern':'.{6,}', 'title':'6 characters minimum'}}) }}
                                 </div>
-                                <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                                <p class="help-block">Username can contain any letters or numbers, without spaces and be at least 6 characters long</p>
                             </div>
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder':'Email'}}) }}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder':'Email', 'pattern':'.{3,}', 'title':'Valid Email'}}) }}
                                 </div>
                                 <p class="help-block">Please provide your E-mail</p>
                             </div>
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder':'Password'}}) }}
+                                    {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'placeholder':'Password', 'pattern':'.{6,}', 'title':'6 characters minimum'}}) }}
                                 </div>
                                 <p class="help-block">Password should be at least 6 characters</p>
                             </div>
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder':'Confirm Password'}}) }}
+                                    {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'placeholder':'Confirm Password', 'pattern':'.{6,}', 'title':'6 characters minimum'}}) }}
                                 </div>
                                 <p class="help-block">Please confirm password</p>
                             </div>
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="register-button">Register</button>
                                 </div>
                             </div>
                         </fieldset>
