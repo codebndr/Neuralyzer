@@ -10,7 +10,6 @@ class RegisterControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/register');
-        $response = $client->getResponse();
 
         $form = $crawler->selectButton('register-button')->form();
 
@@ -27,7 +26,6 @@ class RegisterControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/register');
-        $response = $client->getResponse();
 
         $form = $crawler->selectButton('register-button')->form();
 
@@ -45,7 +43,6 @@ class RegisterControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/register');
-        $response = $client->getResponse();
 
         $form = $crawler->selectButton('register-button')->form();
 
@@ -62,7 +59,6 @@ class RegisterControllerTest extends WebTestCase
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/register');
-        $response = $client->getResponse();
 
         $form = $crawler->selectButton('register-button')->form();
 
