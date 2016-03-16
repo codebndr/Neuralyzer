@@ -42,7 +42,15 @@
                         <a href="#contact">Contact</a>
                     </li>
                     <li>
-                        <a href="#login">Login</a>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="./logout">Logout</a>
+                    {% endif %}
+                        {% if not is_granted('ROLE_USER') %}
+                            <a href="./login">Login</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <a href="./register">Register</a>
                     </li>
                 </ul>
             {% endblock %}
