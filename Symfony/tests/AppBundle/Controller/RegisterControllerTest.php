@@ -5,6 +5,17 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegisterControllerTest extends WebTestCase
 {
+    protected function clearDatabase()
+    {
+        $container = self::$kernel->getContainer();
+        $em = $container->get('doctrine')->getManager();
+        $userRepo = $em->getRepository('AppBundle:User');
+        $userRepo->createQueryBuilder('u')
+            ->delete()
+            ->getQuery()
+            ->execute();
+    }
+
     public function testRegisterNoUsername()
     {
         $client = static::createClient();
@@ -38,9 +49,11 @@ class RegisterControllerTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
     public function testRegisterSuccess()
     {
         $client = static::createClient();
+        $this->clearDatabase();
 
         $crawler = $client->request('GET', '/register');
 
@@ -54,6 +67,7 @@ class RegisterControllerTest extends WebTestCase
         $crawler = $client->submit($form);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
     public function testRegisterDuplicate()
     {
         $client = static::createClient();

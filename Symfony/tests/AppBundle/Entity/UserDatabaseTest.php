@@ -26,14 +26,13 @@ class UserDatabaseTest extends KernelTestCase
 
     protected function clearDatabase()
     {
-        $users = $this->em
-            ->getRepository('AppBundle:User')
-            ->findAll();
-
-        foreach ($users as $user) {
-            $this->em->remove($user);
-        }
-        $this->em->flush();
+        $container = self::$kernel->getContainer();
+        $em = $container->get('doctrine')->getManager();
+        $userRepo = $em->getRepository('AppBundle:User');
+        $userRepo->createQueryBuilder('u')
+            ->delete()
+            ->getQuery()
+            ->execute();
     }
 
     public function testEmptyDatabase()
@@ -75,8 +74,6 @@ class UserDatabaseTest extends KernelTestCase
         $this->assertEquals(10, $users[0]->getTotalFlashCount());
         $this->assertEquals(9, $users[0]->getSuccessfulFlashCount());
         $this->assertEquals(1, $users[0]->getFailedFlashCount());
-
-        $this->clearDatabase();
     }
 
     /**

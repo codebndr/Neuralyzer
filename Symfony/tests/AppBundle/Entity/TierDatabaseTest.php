@@ -26,14 +26,13 @@ class TierDatabaseTest extends KernelTestCase
 
     protected function clearDatabase()
     {
-        $tiers = $this->em
-            ->getRepository('AppBundle:Tier')
-            ->findAll();
-
-        foreach ($tiers as $tier) {
-            $this->em->remove($tier);
-        }
-        $this->em->flush();
+        $container = self::$kernel->getContainer();
+        $em = $container->get('doctrine')->getManager();
+        $userRepo = $em->getRepository('AppBundle:Tier');
+        $userRepo->createQueryBuilder('u')
+            ->delete()
+            ->getQuery()
+            ->execute();
     }
 
     public function testEmptyDatabase()
@@ -71,8 +70,6 @@ class TierDatabaseTest extends KernelTestCase
         $this->assertEquals('Lorem', $tiers[0]->getDescription());
         $this->assertEquals('img/test', $tiers[0]->getTierImage());
         $this->assertEquals(19.99, $tiers[0]->getPrice());
-
-        $this->clearDatabase();
     }
 
     /**
