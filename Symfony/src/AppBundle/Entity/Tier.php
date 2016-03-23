@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * Tier
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TierRepository")
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class Tier
 {

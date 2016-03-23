@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class User implements UserInterface, \Serializable
 {
