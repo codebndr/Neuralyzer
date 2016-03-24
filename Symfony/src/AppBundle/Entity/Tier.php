@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TierRepository")
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Tier
 {
