@@ -15,14 +15,4 @@ class LandingControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Firmware Distribution Made Easy', $crawler->filter('h3')->text());
     }
-
-    public function testLandingFooter()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Copyright © Neuralyzer', $crawler->filter('p.copyright span')->text());
-    }
 }
