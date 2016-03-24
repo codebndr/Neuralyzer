@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationType extends AbstractType
 {
+    /**
+     * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
