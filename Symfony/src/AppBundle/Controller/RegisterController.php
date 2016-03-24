@@ -20,9 +20,9 @@ class RegisterController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password)->setSuccessfulFlashCount(0)->setFailedFlashCount(0)->setTotalFlashCount(0)->setTier(0);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $doc = $this->getDoctrine()->getManager();
+            $doc->persist($user);
+            $doc->flush();
 
             ?>
             <script type="text/javascript">
