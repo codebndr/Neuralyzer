@@ -5,13 +5,13 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class IframeController extends Controller
+class FlashIframeController extends Controller
 {
     /**
-    * @Route("/iframe/", name="iframe_index")
+    * @Route("/flash/iframe/", name="iframe_index")
     */
     public function iframeIndexAction()
     {
-        return $this->render('AppBundle:Iframe:index.html.twig');
+        return $this->render('AppBundle:FlashIframe:index.html.twig');
     }
 }
