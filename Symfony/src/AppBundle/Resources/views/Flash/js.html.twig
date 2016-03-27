@@ -22,7 +22,7 @@
         filepicker.pickAndStore(
                 {
                     container: 'uploadFileModal',
-                    extension: '.hex',
+                    extension: ['.hex','.ino'],
                     services: ['COMPUTER'],
                     multiple: false
                 },
@@ -31,7 +31,9 @@
                 },
                 function (Blobs) {
                     window.flashConfig.url = Blobs[0].url;
-
+                    $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
+                    $("#iframeDemo").contents().find('#initCompiler').val("true");
+                    $("#iframeDemo").contents().find('#initCompiler').change();
                     $("#hexSelection").hide();
                     $("#selectedFile").val(Blobs[0].filename);
                     $("#hexShow").show();
@@ -70,10 +72,10 @@
                     for (i = 0; i < window.boards[k].length; i++) {
                         $('#' + k.replace(/ /g, '')).append($('<option>', {
                             value: JSON.stringify(window.boards[k][i]['upload']),
-                            text: window.boards[k][i]['name']
+                            text: window.boards[k][i]['name'],
+                            build: JSON.stringify(window.boards[k][i]['build'])
                         }));
                     }
-
                 }
             }
         });
@@ -96,6 +98,7 @@
         window.boardOptions.name = $("#boardslist option:selected").text();
         window.boardOptions.upload = $("#boardslist option:selected").val();
         window.jsonEditor.setValue(JSON.parse(window.boardOptions.upload));
+        window.boardOptions.build = $("#boardslist option:selected").attr('build');
     }
 
     function ispValueChanged() {
@@ -111,6 +114,14 @@
         if (typeof window.jsonEditor.getValue().protocol == "undefined") $("#ispConfig").show();
 
         $("#buttonNameSelection").show();
+    }
+
+    function updateWidth() {
+        window.boardOptions.width = JSON.parse($("#iframeWidthSlider").val());
+    }
+
+    function updateHeight() {
+        window.boardOptions.height = JSON.parse($("#iframeHeightSlider").val());
     }
 
     function updateButtonName() {
@@ -133,7 +144,10 @@
         $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
         $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
         $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
+        $("#iframeDemo").contents().find('#boardBuild').val(window.boardOptions.build);
         $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
+        $("#iframeDemo").contents().find('#width').val(window.boardOptions.width);
+        $("#iframeDemo").contents().find('#height').val(window.boardOptions.height);
         if (window.boardOptions.programmer) {
             $("#iframeDemo").contents().find('#programmerCommunication').val(window.boardOptions.programmer.communication);
         }

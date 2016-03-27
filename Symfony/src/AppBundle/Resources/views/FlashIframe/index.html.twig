@@ -9,6 +9,7 @@
 </script>
 
 <body>
+{#<form action="{{ path('save_firmware') }}" method="post">#}
 <select id="cb_cf_ports" style="width: 100%;display: none;">
     <option>
         Select a Comm Port
@@ -31,15 +32,27 @@
 
     <input type="text" id="boardConfig"></input>
 
+    <input type="text" id="boardBuild"></input>
+
     <input type="text" id="buttonName"></input>
+
+    <input type="text" id="boardName"></input>
+
+    <input type="text" name="width" id="width"/>
+
+    <input type="text" name="height" id="height"/>
 
     <input type="text" id="programmerCommunication"></input>
 
     <input type="text" id="startInitialization" onChange="checkForInitialization()" val="false"></input>
 
+    <input type="text" id="initCompiler" onChange="initCompiler()" val="false"></input>
+
     <textarea id="hexFileContents"></textarea>
 
 </div>
+{#<input type="submit" value="Save"/>#}
+{#</form>#}
 <!-- jQuery -->
 <script type="text/javascript" src="{{ asset('//code.jquery.com/jquery-2.1.4.min.js') }}"></script>
 <!-- Bootstrap Core JavaScript -->
