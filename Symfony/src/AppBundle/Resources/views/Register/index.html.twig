@@ -20,7 +20,8 @@
                                 <div class="controls">
                                     {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder':'User Name', 'pattern':'.{6,}', 'title':'6 characters minimum'}}) }}
                                 </div>
-                                <p class="help-block">Username can contain any letters or numbers, without spaces and be at least 6 characters long</p>
+                                <p class="help-block">Username can contain any letters or numbers, without spaces and be
+                                    at least 6 characters long</p>
                             </div>
                             <br>
                             <div class="control-group">
@@ -46,7 +47,15 @@
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit" name="register-button">Register</button>
+                                    {{ form_widget(form.tier, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                            name="register-button">Register
+                                    </button>
                                 </div>
                             </div>
                         </fieldset>

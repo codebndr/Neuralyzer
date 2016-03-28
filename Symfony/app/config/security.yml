@@ -19,6 +19,14 @@ security:
             form_login:
                 login_path: login
                 check_path: login
+                failure_path: login
+            logout:
+                path:   /logout
+                target: /
         secured_area:
             pattern: ^/
             form_login: ~
+    access_control:
+        - { path: ^/dashboard/, roles: ROLE_USER }
+        - { path: ^/showinfo/, roles: ROLE_USER }
+        - { path: ^/flash/, roles: ROLE_USER }

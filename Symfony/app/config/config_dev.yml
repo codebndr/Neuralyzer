@@ -11,10 +11,6 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
-doctrine:
-    dbal:
-        dbname:   "%database_name%_test"
-
 monolog:
     handlers:
         main:
