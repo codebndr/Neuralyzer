@@ -3,11 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tier
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TierRepository")
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class Tier
 {
@@ -184,5 +187,15 @@ class Tier
     public function getTierImage()
     {
         return $this->tierImage;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="tier")
+     */
+    protected $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
     }
 }

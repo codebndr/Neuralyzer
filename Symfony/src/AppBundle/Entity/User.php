@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class User implements UserInterface, \Serializable
 {
@@ -49,6 +51,11 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Your password must be at least {{ limit }} characters long"
+     * )
+     *
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -57,32 +64,29 @@ class User implements UserInterface, \Serializable
      * @var int
      *
      * @ORM\Column(name="tier", type="integer")
-     *
-     * @Assert\Length(
-     *      min = 6,
-     *      minMessage = "Your password must be at least {{ limit }} characters long"
-     * )
+     * @ORM\ManyToOne(targetEntity="Tier", inversedBy="users")
+     * @ORM\JoinColumn(name="tier_id", referencedColumnName="id")
      */
-    private $tier;
+    protected $tier;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="totalFlashCount", type="integer")
+     * @ORM\Column(name="totalFlashCount", type="integer", options={"default" = 0})
      */
     private $totalFlashCount;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="successfulFlashCount", type="integer")
+     * @ORM\Column(name="successfulFlashCount", type="integer", options={"default" = 0})
      */
     private $successfulFlashCount;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="failedFlashCount", type="integer")
+     * @ORM\Column(name="failedFlashCount", type="integer", options={"default" = 0})
      */
     private $failedFlashCount;
 
