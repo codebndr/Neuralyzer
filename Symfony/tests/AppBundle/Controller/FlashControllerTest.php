@@ -1,38 +1,38 @@
 <?php
-
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use AppBundle\Entity\User;
 
 class FlashControllerTest extends WebTestCase
 {
-    public function testFlashHeader()
+    private $client = null;
+
+    public function setUp()
     {
-        $client = static::createClient();
+        $this->client = static::createClient();
+    }
 
-        $crawler = $client->request('GET', '/flash');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    public function testFlashPage()
+    {
+        $this->logIn();
+        $crawler = $this->client->request('GET', '/flash');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertContains('Upload .hex file', $crawler->filter('h2')->text());
+        $this->assertContains('Next', $crawler->filter('button#nextButton')->text());
+        $this->assertContains('Submit', $crawler->filter('button#submitButton')->text());
     }
 
-    public function testFlashConfig()
+    private function logIn()
     {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/flash');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Select Board', $crawler->filter('h2')->eq(2)->text());
-    }
-
-    public function testFlashButtonName()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/flash');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Select Button Name', $crawler->filter('h2')->eq(5)->text());
+        $session = $this->client->getContainer()->get('session');
+        $firewall = 'login';
+        $token = new UsernamePasswordToken('alexyao99', 'qwerty', $firewall, array('ROLE_USER'));
+        $session->set('_security_' . $firewall, serialize($token));
+        $session->save();
+        $cookie = new Cookie($session->getName(), $session->getId());
+        $this->client->getCookieJar()->set($cookie);
     }
 }
