@@ -14,13 +14,11 @@ class RegisterControllerTest extends WebTestCase
 		$form = $crawler->selectButton('register-button')->form();
 
 		$crawler = $client->submit($form);
-		$this->assertEquals(500, $client->getResponse()->getStatusCode());
-		$this->assertContains("'username' cannot be null", $crawler->text());
+		$this->assertNotContains("The user account has been registered.", $crawler->text());
 
 		$form['registration[username]'] = 'alexyao999';
 		$crawler = $client->submit($form);
-		$this->assertEquals(500, $client->getResponse()->getStatusCode());
-		$this->assertContains("'email' cannot be null", $crawler->text());
+		$this->assertNotContains("The user account has been registered.", $crawler->text());
 
 		$form['registration[email]'] = 'alexyao999@gmail.com';
 		$form['registration[password][first]'] = 'qwerty';
