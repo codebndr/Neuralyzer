@@ -42,7 +42,7 @@
                         <a href="#contact">Contact</a>
                     </li>
                     <li>
-                        {% if is_granted('ROLE_USER') %}
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <a href="./logout">Logout</a>
                         {% else %}
                             <a href="./login">Login</a>
