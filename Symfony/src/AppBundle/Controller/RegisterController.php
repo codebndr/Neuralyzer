@@ -17,7 +17,8 @@ class RegisterController extends Controller
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        $errors = $this->get('validator')->validate($user);
+        if ($form->isSubmitted() && $form->isValid() && count($errors) > 0) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password)->setSuccessfulFlashCount(0)->setFailedFlashCount(0)->setTotalFlashCount(0)->setTier(0);
             $doc = $this->getDoctrine()->getManager();
@@ -32,6 +33,7 @@ class RegisterController extends Controller
             <?php
         }
 
-        return $this->render('AppBundle:Register:index.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:Register:index.html.twig',
+            array('form' => $form->createView(), 'errors' => $errors));
     }
 }
