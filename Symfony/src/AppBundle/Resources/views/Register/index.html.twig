@@ -11,6 +11,11 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="row">
                     <div class="col-lg-12">
+                        {% if errors %}
+                            {% for error in errors %}
+                                <p class="text-danger">{{ error.message }}</p>
+                            {% endfor %}
+                        {% endif %}
                         {{ form_start(form) }}
                         <fieldset>
                             <div id="legend">
