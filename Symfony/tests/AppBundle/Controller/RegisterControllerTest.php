@@ -15,18 +15,12 @@ class RegisterControllerTest extends WebTestCase
 
 		$crawler = $client->submit($form);
 		$this->assertEquals(500, $client->getResponse()->getStatusCode());
-		$this->assertRegexp(
-			'/&#039;username&#039; cannot be null/',
-			$client->getResponse()->getContent()
-		);
+		$this->assertContains("'username' cannot be null", $crawler->text());
 
 		$form['registration[username]'] = 'alexyao999';
 		$crawler = $client->submit($form);
 		$this->assertEquals(500, $client->getResponse()->getStatusCode());
-		$this->assertRegexp(
-			'/&#039;email&#039; cannot be null/',
-			$client->getResponse()->getContent()
-		);
+		$this->assertContains("'email' cannot be null", $crawler->text());
 
 		$form['registration[email]'] = 'alexyao999@gmail.com';
 		$form['registration[password][first]'] = 'qwerty';
@@ -37,9 +31,6 @@ class RegisterControllerTest extends WebTestCase
 
 		$crawler = $client->submit($form);
 		$this->assertEquals(500, $client->getResponse()->getStatusCode());
-		$this->assertRegexp(
-			'/duplicate/',
-			$client->getResponse()->getContent()
-		);
+		$this->assertContains("Duplicate entry 'alexyao999'", $crawler->text());
 	}
 }
