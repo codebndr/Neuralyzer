@@ -10,6 +10,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ *
+ * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class User implements UserInterface, \Serializable
 {
@@ -78,14 +80,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="successfulFlashCount", type="integer")
      */
     private $successfulFlashCount;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="failedFlashCount", type="integer")
-     */
-    private $failedFlashCount;
-
 
     /**
      * Get id
@@ -239,30 +233,6 @@ class User implements UserInterface, \Serializable
     public function getSuccessfulFlashCount()
     {
         return $this->successfulFlashCount;
-    }
-
-    /**
-     * Set failedFlashCount
-     *
-     * @param integer $failedFlashCount
-     *
-     * @return User
-     */
-    public function setFailedFlashCount($failedFlashCount)
-    {
-        $this->failedFlashCount = $failedFlashCount;
-
-        return $this;
-    }
-
-    /**
-     * Get failedFlashCount
-     *
-     * @return int
-     */
-    public function getFailedFlashCount()
-    {
-        return $this->failedFlashCount;
     }
 
     public function getSalt()
