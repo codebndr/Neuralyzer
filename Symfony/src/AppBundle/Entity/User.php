@@ -41,9 +41,8 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
-     * @Assert\Length(
-     *      min = 6,
-     *      minMessage = "Your email must be at least {{ limit }} characters long"
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
      * )
      */
     private $email;
@@ -82,14 +81,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="successfulFlashCount", type="integer", options={"default" = 0})
      */
     private $successfulFlashCount;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="failedFlashCount", type="integer", options={"default" = 0})
-     */
-    private $failedFlashCount;
-
 
     /**
      * Get id
@@ -243,30 +234,6 @@ class User implements UserInterface, \Serializable
     public function getSuccessfulFlashCount()
     {
         return $this->successfulFlashCount;
-    }
-
-    /**
-     * Set failedFlashCount
-     *
-     * @param integer $failedFlashCount
-     *
-     * @return User
-     */
-    public function setFailedFlashCount($failedFlashCount)
-    {
-        $this->failedFlashCount = $failedFlashCount;
-
-        return $this;
-    }
-
-    /**
-     * Get failedFlashCount
-     *
-     * @return int
-     */
-    public function getFailedFlashCount()
-    {
-        return $this->failedFlashCount;
     }
 
     public function getSalt()
