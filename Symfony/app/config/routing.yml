@@ -3,3 +3,8 @@ app:
     type:     annotation
 logout:
     path: /logout
+showinfo:
+    path:      /showinfo/{firmwareid}
+    defaults:
+        _controller: AppBundle:ShowInfo:show
+        firmwareid: 1
