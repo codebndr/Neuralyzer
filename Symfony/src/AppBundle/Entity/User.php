@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -64,7 +65,7 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(name="tier", type="integer")
      * @ORM\ManyToOne(targetEntity="Tier", inversedBy="users")
-     * @ORM\JoinColumn(name="tier_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="tier_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $tier;
 
@@ -257,6 +258,10 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->email,
+            $this->tier,
+            $this->totalFlashCount,
+            $this->successfulFlashCount,
         ));
     }
 
@@ -267,6 +272,26 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->email,
+            $this->tier,
+            $this->totalFlashCount,
+            $this->successfulFlashCount,
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Log", mappedBy="user")
+     */
+    protected $logs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FirmwareConfig", mappedBy="user")
+     */
+    protected $firmwareConfigs;
+
+    public function __construct()
+    {
+        $this->logs = new ArrayCollection();
+        $this->firmwareConfigs = new ArrayCollection();
     }
 }
