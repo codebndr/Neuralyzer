@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * FirmwareConfig
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\FirmwareConfigRepository")
+ *
+ * @SuppressWarnings(PHPMD)
  */
 class FirmwareConfig
 {
@@ -23,7 +25,9 @@ class FirmwareConfig
     /**
      * @var int
      *
-     * @ORM\Column(name="Owner", type="integer")
+     * @ORM\Column(name="owner", type="integer")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="firmwareConfigs")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $owner;
 
@@ -51,9 +55,9 @@ class FirmwareConfig
     /**
      * @var bool
      *
-     * @ORM\Column(name="SerialPortAutoDetection", type="boolean")
+     * @ORM\Column(name="SerialPortAutoDetect", type="boolean")
      */
-    private $serialPortAutoDetection;
+    private $serialPortAutoDetect;
 
     /**
      * @var string
@@ -198,27 +202,27 @@ class FirmwareConfig
     }
 
     /**
-     * Set serialPortAutoDetection
+     * Set serialPortAutoDetect
      *
-     * @param boolean $serialPortAutoDetection
+     * @param boolean $serialPortAutoDetect
      *
      * @return FirmwareConfig
      */
-    public function setSerialPortAutoDetection($serialPortAutoDetection)
+    public function setSerialPortAutoDetect($serialPortAutoDetect)
     {
-        $this->serialPortAutoDetection = $serialPortAutoDetection;
+        $this->serialPortAutoDetect = $serialPortAutoDetect;
 
         return $this;
     }
 
     /**
-     * Get serialPortAutoDetection
+     * Get serialPortAutoDetect
      *
      * @return bool
      */
-    public function getSerialPortAutoDetection()
+    public function isSerialPortAutoDetect()
     {
-        return $this->serialPortAutoDetection;
+        return $this->serialPortAutoDetect;
     }
 
     /**
@@ -341,4 +345,3 @@ class FirmwareConfig
         return $this->uniqueUrl;
     }
 }
-
