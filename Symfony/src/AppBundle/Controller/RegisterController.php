@@ -20,7 +20,7 @@ class RegisterController extends Controller
         $errors = $this->get('validator')->validate($user);
         if ($form->isSubmitted() && $form->isValid() && count($errors) == 0) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password)->setSuccessfulFlashCount(0)->setFailedFlashCount(0)->setTotalFlashCount(0)->setTier(0);
+            $user->setPassword($password)->setSuccessfulFlashCount(0)->setTotalFlashCount(0)->setTier(0);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
