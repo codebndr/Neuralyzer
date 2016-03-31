@@ -3,9 +3,6 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Entity\Tier;
-use AppBundle\Entity\User;
-use AppBundle\Entity\FirmwareConfig;
 
 class TierController extends Controller
 {
