@@ -37,8 +37,6 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    globals:
-        homepage: "http://localhost:8889/"
 
 # Doctrine Configuration
 doctrine:
