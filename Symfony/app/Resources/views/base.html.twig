@@ -33,24 +33,23 @@
             {% block nav %}
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#about">About</a>
+                        <a href="/tier">Pricing</a>
                     </li>
-                    <li>
-                        <a href="./flash">Flash</a>
-                    </li>
-                    <li>
-                        <a href="#contact">Contact</a>
-                    </li>
-                    <li>
-                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                            <a href="./logout">Logout</a>
-                        {% else %}
-                            <a href="./login">Login</a>
-                        {% endif %}
-                    </li>
-                    <li>
-                        <a href="./register">Register</a>
-                    </li>
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li>
+                            <a href="/flash">Upload Firmware</a>
+                        </li>
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/login">Login</a>
+                        </li>
+                        <li>
+                            <a href="/register">Register</a>
+                        </li>
+                    {% endif %}
                 </ul>
             {% endblock %}
         </div>
