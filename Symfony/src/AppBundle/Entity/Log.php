@@ -261,7 +261,7 @@ class Log
      *
      * @return bool
      */
-    public function getHasPreviousSession()
+    public function hasPreviousSession()
     {
         return $this->hasPreviousSession;
     }
