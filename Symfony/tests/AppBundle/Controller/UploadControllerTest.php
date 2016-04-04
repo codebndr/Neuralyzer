@@ -6,7 +6,7 @@ use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use AppBundle\Entity\User;
 
-class FlashControllerTest extends WebTestCase
+class UploadControllerTest extends WebTestCase
 {
     private $client = null;
 
@@ -18,11 +18,11 @@ class FlashControllerTest extends WebTestCase
     public function testFlashPage()
     {
         $this->logIn();
-        $crawler = $this->client->request('GET', '/flash');
+        $crawler = $this->client->request('GET', '/upload');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertContains('Upload .hex file', $crawler->filter('h2')->text());
         $this->assertContains('Next', $crawler->filter('button#nextButton')->text());
-        $this->assertContains('Submit', $crawler->filter('button#submitButton')->text());
+        $this->assertContains('Save Firmware Configurations', $crawler->filter('button#submitButton')->text());
     }
 
     private function logIn()

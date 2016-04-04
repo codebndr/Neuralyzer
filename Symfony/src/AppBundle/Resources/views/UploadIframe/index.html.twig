@@ -33,28 +33,23 @@
 
     <input type="text" id="boardBuild"></input>
 
-    <input type="text" id="buttonName"></input>
+    <input type="text" id="buttonName" onChange="updateButtonName()"></input>
+
+    <input type="text" id="backgroundImage" onChange="updateBackgroundImage()"></input>
 
     <input type="text" id="boardName"></input>
-
-    <input type="text" name="width" id="width"/>
-
-    <input type="text" name="height" id="height"/>
 
     <input type="text" id="programmerCommunication"></input>
 
     <input type="text" id="startInitialization" onChange="checkForInitialization()" val="false"></input>
 
     <input type="text" id="initCompiler" onChange="initCompiler()" val="false"></input>
-
-    <textarea id="hexFileContents"></textarea>
-
 </div>
 <!-- jQuery -->
 <script type="text/javascript" src="{{ asset('//code.jquery.com/jquery-2.1.4.min.js') }}"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="{{ asset('//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('//codebender.cc/embed/compilerflasher.js') }}"></script>
-{% include 'AppBundle:FlashIframe:js.html.twig' %}
+{% include 'AppBundle:UploadIframe:js.html.twig' %}
 </body>
 </html>

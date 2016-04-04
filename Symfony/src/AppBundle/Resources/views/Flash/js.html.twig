@@ -1,158 +1,72 @@
-<script type="text/javascript">
-    $("#iframeWidthSlider").slider({
-        tooltip: 'always'
-    });
-
-    $("#iframeWidthSlider").on("slide", function (slideEvt) {
-        $("#iframeDemo").css('width', slideEvt.value);
-    });
-
-    $("#iframeHeightSlider").slider({
-        tooltip: 'always'
-    });
-
-    $("#iframeHeightSlider").on("slide", function (slideEvt) {
-        $("#iframeDemo").css('height', slideEvt.value);
-    });
-    window.flashConfig = {};
-
+<script>
     $(document).ready(function () {
-        filepicker.setKey("AlFbsJlKCTImNl6LUUZOzz");
+        window.boardConfig = {};
+        window.boardConfig.name = "{{ boardName|raw }}";
+        window.boardConfig.upload = {{ boardUpload|raw }};
+        window.boardConfig.build = {{ boardBuild|raw }};
+        if ("{{ firmware.IFrameBackground }}" != "none")
+            $("body").css({'background-image': 'url({{ firmware.IFrameBackground }})'});
 
-        filepicker.pickAndStore(
-                {
-                    container: 'uploadFileModal',
-                    extension: ['.hex', '.ino'],
-                    services: ['COMPUTER'],
-                    multiple: false
-                },
-                {
-                    path: '/hex_files/user_id/'
-                },
-                function (Blobs) {
-                    window.flashConfig.url = Blobs[0].url;
-                    $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
-                    $("#iframeDemo").contents().find('#initCompiler').val("true");
-                    $("#iframeDemo").contents().find('#initCompiler').change();
-                    $("#hexSelection").hide();
-                    $("#selectedFile").val(Blobs[0].filename);
-                    $("#hexShow").show();
+        window.initializationStarted = false;
+        initCompiler();
 
-                    $("#configSelection").show();
-                }
-        );
-
-        $('#boardslist').select2();
-        window.jsonEditor = new JSONEditor(document.getElementById('editor_holder'),
-                {
-                    schema: {
-                        title: "Board Config",
-                        type: "object",
-                        properties: {}
-                    },
-                    theme: 'bootstrap3',
-                    disable_edit_json: true,
-                    disable_collapse: true
-                });
-
-
-        window.jsonEditor.setValue(JSON.parse('{"protocol":"","maximum_size":"","speed":""}'));
-
-        $.get("https://codebender.cc/board/listboards", function (data) {
-
-            window.boards = JSON.parse(data);
-
-            for (var k in window.boards) {
-                if (window.boards.hasOwnProperty(k)) {
-                    $('#boardslist').append($('<optgroup>', {
-                        label: k,
-                        id: k.replace(/ /g, '')
-                    }));
-
-                    for (i = 0; i < window.boards[k].length; i++) {
-                        $('#' + k.replace(/ /g, '')).append($('<option>', {
-                            value: JSON.stringify(window.boards[k][i]['upload']),
-                            text: window.boards[k][i]['name'],
-                            build: JSON.stringify(window.boards[k][i]['build'])
-                        }));
-                    }
-                }
-            }
-        });
-
-        $.get("https://codebender.cc/board/programmers", function (data) {
-            window.programmers = JSON.parse(data);
-            for (i = 0; i < window.programmers.length; i++) {
-                if (window.programmers[i].name != 'Parallel Programmer') {
-                    $('#cb_cf_programmers').append($('<option>', {
-                        value: JSON.stringify(window.programmers[i]),
-                        text: window.programmers[i]['name']
-                    }));
-                }
+        $(document).ajaxComplete(function (event, request, settings) {
+            if (settings.url == "https://codebender.cc/utilities/compile/") {
+                waitUntilNotWorking();
             }
         });
     });
 
-    function valueChanged() {
-        window.boardOptions = {};
-        window.boardOptions.name = $("#boardslist option:selected").text();
-        window.boardOptions.upload = $("#boardslist option:selected").val();
-        window.jsonEditor.setValue(JSON.parse(window.boardOptions.upload));
-        window.boardOptions.build = $("#boardslist option:selected").attr('build');
-    }
-
-    function ispValueChanged() {
-        window.boardOptions.programmer = JSON.parse($("#cb_cf_programmers option:selected").val());
-    }
-
-    function saveConfig() {
-        window.flashConfig.boardConfig = JSON.stringify(window.jsonEditor.getValue());
-
-        $("#configSelection").hide();
-        $("#selectedConfigOutput").text(JSON.stringify(window.jsonEditor.getValue(), null, 2));
-        $("#configShow").show();
-        if (typeof window.jsonEditor.getValue().protocol == "undefined") $("#ispConfig").show();
-
-        $("#buttonNameSelection").show();
-    }
-
-    function updateWidth() {
-        window.boardOptions.width = JSON.parse($("#iframeWidthSlider").val());
-    }
-
-    function updateHeight() {
-        window.boardOptions.height = JSON.parse($("#iframeHeightSlider").val());
-    }
-
-    function updateButtonName() {
-        $("#buttonNameButton").text($("#buttonName").val());
-        $("#buttonNameShowButton").text($("#buttonName").val());
-    }
-
-    function saveButtonName() {
-        window.flashConfig.buttonName = $("#buttonName").val();
-
-        $("#buttonNameSelection").hide();
-        $("#buttonNameShow").show();
-
-        initIframeConfig();
-
-        $("#iframeStyleSelection").show();
-    }
-
-    function initIframeConfig() {
-        $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
-        $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
-        $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
-        $("#iframeDemo").contents().find('#boardBuild').val(window.boardOptions.build);
-        $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
-        $("#iframeDemo").contents().find('#width').val(window.boardOptions.width);
-        $("#iframeDemo").contents().find('#height').val(window.boardOptions.height);
-        if (window.boardOptions.programmer) {
-            $("#iframeDemo").contents().find('#programmerCommunication').val(window.boardOptions.programmer.communication);
+    function waitUntilNotWorking() {
+        if ($("#cb_cf_operation_output").html().includes("Working")) {
+            setTimeout(waitUntilNotWorking, 500);
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "{{ path('update_flash_count', {'owner': firmware.owner }) }}",
+                data: {
+                    'result': $("#cb_cf_operation_output").html()
+                }
+            });
         }
-        $("#iframeDemo").contents().find('#startInitialization').val("true");
-        $("#iframeDemo").contents().find('#startInitialization').change();
     }
 
+    function initCompiler() {
+        $.get("{{ firmware.HexFileUrl }}", function (data) {
+            window.compilerflasher = new compilerflasher(function () {
+                return {
+                    "uploaded.ino": data
+                }
+            });
+            checkForInitialization();
+        });
+    }
+
+    function checkForInitialization() {
+        if (window.initializationStarted == false) {
+            startInitialization();
+        }
+    }
+
+    function startInitialization() {
+        compilerflasher.selectedBoard = {};
+        compilerflasher.selectedBoard.name = window.boardConfig.name;
+        compilerflasher.selectedBoard.upload = window.boardConfig.upload;
+        compilerflasher.selectedBoard.build = window.boardConfig.build;
+        if ("{{ firmware.IPProgrammer|join }}" == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
+            $('#cb_cf_ports').show();
+        }
+
+        window.initializationStarted = true;
+
+        $("#loadingDiv").show(500);
+
+        $("#cb_cf_flash_btn").text("{{ firmware.ButtonName }}");
+
+        $.get("{{ firmware.HexFileUrl }}", function (data) {
+            $("#cb_cf_flash_btn").removeAttr('disabled');
+            $("#loadingDiv").hide(500);
+            $("#cb_cf").show(500);
+        });
+    }
 </script>

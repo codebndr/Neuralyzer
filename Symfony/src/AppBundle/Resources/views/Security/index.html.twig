@@ -13,7 +13,7 @@
                     <div class="col-lg-12">
                         {% if error %}
                             <p class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</p>
-                        `{% endif %}
+                        {% endif %}
                         <form id="login-form" action="{{ path('login') }}" method="post">
                             <fieldset>
                                 <div id="legend">

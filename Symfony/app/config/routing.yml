@@ -8,3 +8,8 @@ showinfo:
     defaults:
         _controller: AppBundle:ShowInfo:show
         firmwareid: 1
+flash:
+    path:      /flash/{uniqueUrl}
+    defaults:
+        _controller: AppBundle:Flash:show
+        firmwareid: 1

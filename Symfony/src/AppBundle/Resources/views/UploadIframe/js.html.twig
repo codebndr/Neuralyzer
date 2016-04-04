@@ -47,4 +47,12 @@
         });
     });
 
+    function updateButtonName(){
+        $("#cb_cf_flash_btn").html($("#buttonName").val());
+    }
+
+    function updateBackgroundImage(){
+        $("body").css({ 'background-image': 'url('+ $("#backgroundImage").val() +')' });
+    }
+
 </script>

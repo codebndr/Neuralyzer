@@ -12,10 +12,6 @@
             <table class="table table-condensed table-striped table-hover table-bordered">
                 <tbody>
                 <tr>
-                    <th scope="col">Owner</th>
-                    <td>{{ firmware.owner }}</td>
-                </tr>
-                <tr>
                     <td>Hex File Url</td>
                     <td>{{ firmware.HexFileUrl }}</td>
                 </tr>
@@ -49,7 +45,7 @@
                 </tr>
                 <tr>
                     <td>iFrame URL</td>
-                    <td>{{ firmware.UniqueUrl }}</td>
+                    <td>{{ firmware.UniqueUrl }}/{{ firmware.id }}</td>
                 </tr>
                 </tbody>
             </table>
