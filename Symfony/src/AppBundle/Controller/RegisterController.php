@@ -27,13 +27,8 @@ class RegisterController extends Controller
             $entityManager->flush();
             $token = new UsernamePasswordToken($user, null, 'login', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
-
-            ?>
-            <script type="text/javascript">
-                alert("The user account has been registered.");
-                window.location.href = "../dashboard";
-            </script>
-            <?php
+            $messages = ["You have been registered!"];
+            return $this->forward('AppBundle:Dashboard:show', array('messages' => $messages));
         }
 
         return $this->render('AppBundle:Register:index.html.twig', array('form' => $form->createView(), 'errors' => $errors));

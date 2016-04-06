@@ -27,12 +27,8 @@ class UploadController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($firmware);
             $entityManager->flush();
-            ?>
-            <script type="text/javascript">
-                alert("Firmware uploaded!");
-                window.location.href = "../dashboard";
-            </script>
-            <?php
+            $messages = ["Firmware uploaded!"];
+            return $this->forward('AppBundle:Dashboard:show', array('messages' => $messages));
         }
         return $this->render('AppBundle:Upload:index.html.twig',
             array('form' => $form->createView(), 'errors' => $errors));
