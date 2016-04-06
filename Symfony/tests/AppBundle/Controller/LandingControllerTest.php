@@ -4,15 +4,15 @@ namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class LandingControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testLandingHeader()
     {
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Upload .hex file', $crawler->filter('h2')->text());
+        $this->assertContains('Firmware Distribution Made Easy', $crawler->filter('h3')->text());
     }
 }
