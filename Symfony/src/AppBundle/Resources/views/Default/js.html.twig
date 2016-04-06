@@ -7,7 +7,7 @@
         filepicker.pickAndStore(
                 {
                     container: 'uploadFileModal',
-                    extension: '.hex',
+                    extension: ['.hex','.ino'],
                     services: ['COMPUTER'],
                     multiple: false
                 },
@@ -20,6 +20,9 @@
                     console.log(Blobs[0].url);
 
                     window.flashConfig.url = Blobs[0].url;
+                    $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
+                    $("#iframeDemo").contents().find('#initCompiler').val("true");
+                    $("#iframeDemo").contents().find('#initCompiler').change();
 
                     $("#hexSelection").hide();
                     $("#selectedFile").val(Blobs[0].filename);
@@ -38,7 +41,6 @@
                         properties: {}
                     },
                     theme: 'bootstrap3',
-                    // disable_properties: true,
                     disable_edit_json: true,
                     disable_collapse: true
                 });
@@ -49,8 +51,6 @@
         $.get("https://codebender.cc/board/listboards", function (data) {
 
             window.boards = JSON.parse(data);
-            // console.log(data);
-            // console.log(window.boards);
 
             for (var k in window.boards) {
                 if (window.boards.hasOwnProperty(k)) {
@@ -60,13 +60,11 @@
                         id: k.replace(/ /g, '')
                     }));
 
-                    // console.log(window.boards[k]);
-
                     for (i = 0; i < window.boards[k].length; i++) {
-                        // console.log(window.boards[k][i]['name']);
                         $('#' + k.replace(/ /g, '')).append($('<option>', {
                             value: JSON.stringify(window.boards[k][i]['upload']),
-                            text: window.boards[k][i]['name']
+                            text: window.boards[k][i]['name'],
+                            build: JSON.stringify(window.boards[k][i]['build'])
                         }));
                     }
 
@@ -92,6 +90,7 @@
         window.boardOptions.name = $("#boardslist option:selected").text();
         window.boardOptions.upload = $("#boardslist option:selected").val();
         window.jsonEditor.setValue(JSON.parse(window.boardOptions.upload));
+        window.boardOptions.build = $("#boardslist option:selected").attr('build');
     }
 
     function ispValueChanged() {
@@ -126,9 +125,9 @@
     }
 
     function initIframeConfig() {
-        $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
         $("#iframeDemo").contents().find('#boardName').val(window.boardOptions.name);
         $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardConfig);
+        $("#iframeDemo").contents().find('#boardBuild').val(window.boardOptions.build);
         $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
         if (window.boardOptions.programmer) {
             $("#iframeDemo").contents().find('#programmerCommunication').val(window.boardOptions.programmer.communication);
