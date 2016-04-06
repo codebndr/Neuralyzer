@@ -4,7 +4,6 @@ namespace Tests\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use AppBundle\Entity\User;
 
 class UploadControllerTest extends WebTestCase
 {
