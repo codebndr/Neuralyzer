@@ -12,6 +12,8 @@ before_script:
 
 
 script:
+  - php bin/console doctrine:database:create
+  - php bin/console doctrine:schema:create
   - vendor/bin/phpunit -c . --coverage-clover clover.xml
   - vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
   - vendor/bin/phpcpd src/
