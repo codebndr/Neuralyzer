@@ -9,18 +9,18 @@ class DashboardController extends Controller
     /**
      * @Route("/dashboard", name="dashboard")
      */
-    public function showAction($messages)
+    public function showAction($messages = [])
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $usr = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $firmwares = $this->getDoctrine()
             ->getRepository('AppBundle:FirmwareConfig')
-            ->findByOwner($usr->getId());
+            ->findByOwner($user->getId());
         $tier = $this->getDoctrine()
             ->getRepository('AppBundle:Tier')
-            ->find($usr->getTier());
+            ->find($user->getTier());
 
         return $this->render('AppBundle:Dashboard:index.html.twig',
-            array('user' => $usr, 'firmwares' => $firmwares, 'tier' => $tier, 'messages' => $messages));
+            array('user' => $user, 'firmwares' => $firmwares, 'tier' => $tier, 'messages' => $messages));
     }
 }
