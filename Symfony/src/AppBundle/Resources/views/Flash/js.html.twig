@@ -1,0 +1,72 @@
+<script>
+    $(document).ready(function () {
+        window.boardConfig = {};
+        window.boardConfig.name = "{{ boardName|raw }}";
+        window.boardConfig.upload = {{ boardUpload|raw }};
+        window.boardConfig.build = {{ boardBuild|raw }};
+        if ("{{ firmware.IFrameBackground }}" != "none")
+            $("body").css({'background-image': 'url({{ firmware.IFrameBackground }})'});
+
+        window.initializationStarted = false;
+        initCompiler();
+
+        $(document).ajaxComplete(function (event, request, settings) {
+            if (settings.url == "https://codebender.cc/utilities/compile/") {
+                waitUntilNotWorking();
+            }
+        });
+    });
+
+    function waitUntilNotWorking() {
+        if ($("#cb_cf_operation_output").html().includes("Working")) {
+            setTimeout(waitUntilNotWorking, 500);
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "{{ path('update_flash_count', {'owner': firmware.owner }) }}",
+                data: {
+                    'result': $("#cb_cf_operation_output").html()
+                }
+            });
+        }
+    }
+
+    function initCompiler() {
+        $.get("{{ firmware.HexFileUrl }}", function (data) {
+            window.compilerflasher = new compilerflasher(function () {
+                return {
+                    "uploaded.ino": data
+                }
+            });
+            checkForInitialization();
+        });
+    }
+
+    function checkForInitialization() {
+        if (window.initializationStarted == false) {
+            startInitialization();
+        }
+    }
+
+    function startInitialization() {
+        compilerflasher.selectedBoard = {};
+        compilerflasher.selectedBoard.name = window.boardConfig.name;
+        compilerflasher.selectedBoard.upload = window.boardConfig.upload;
+        compilerflasher.selectedBoard.build = window.boardConfig.build;
+        if ("{{ firmware.IPProgrammer|join }}" == 'serial' || compilerflasher.selectedBoard.upload.protocol != 'undefined') {
+            $('#cb_cf_ports').show();
+        }
+
+        window.initializationStarted = true;
+
+        $("#loadingDiv").show(500);
+
+        $("#cb_cf_flash_btn").text("{{ firmware.ButtonName }}");
+
+        $.get("{{ firmware.HexFileUrl }}", function (data) {
+            $("#cb_cf_flash_btn").removeAttr('disabled');
+            $("#loadingDiv").hide(500);
+            $("#cb_cf").show(500);
+        });
+    }
+</script>

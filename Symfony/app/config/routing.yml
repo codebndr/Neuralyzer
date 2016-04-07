@@ -1,3 +1,15 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+logout:
+    path: /logout
+showinfo:
+    path:      /showinfo/{firmwareid}
+    defaults:
+        _controller: AppBundle:ShowInfo:show
+        firmwareid: 1
+flash:
+    path:      /flash/{uniqueUrl}
+    defaults:
+        _controller: AppBundle:Flash:show
+        firmwareid: 1
