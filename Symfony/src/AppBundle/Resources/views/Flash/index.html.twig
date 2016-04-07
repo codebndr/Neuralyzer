@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') }}" rel="stylesheet"/>
+    <link rel='stylesheet' href="{{ asset('css/bootstrap-slider.css') }}">
+    {% include 'AppBundle:Flash:css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div id="hexSelection">
+        <h2>Upload .hex file</h2>
+        <iframe id='uploadFileModal' style="width:100%; height:600px; border: 0px;"></iframe>
+    </div>
+
+    <div id="hexShow" style="display:none;">
+        <h2>Uploaded .hex file</h2>
+        <input class="form-control" id="selectedFile" type="text" disabled/>
+    </div>
+
+    <div id="configSelection" style="display:none;">
+
+        <h2>Select Board</h2>
+        <select id="boardslist" onChange="valueChanged()" style="width: 100%">
+            <option value='{"protocol":"","maximum_size":"","speed":""}'>
+                Select a board
+            </option>
+        </select>
+
+        <div id='editor_holder'></div>
+
+        <button class="btn btn-default" onClick='saveConfig()'>Next</button>
+    </div>
+    <div id="configShow" style="display:none;">
+        <h2>Selected Config</h2>
+        <pre id=selectedConfigOutput>
+        </pre>
+    </div>
+    <div id="ispConfig" style="display:none;">
+        <h2>Select ISP</h2>
+        <select id="cb_cf_programmers" class="dropdown" onChange="ispValueChanged()">
+        </select>
+    </div>
+    <div id="portConfig" style="display:none;">
+        <select id="cb_cf_ports" class="dropdown">
+        </select>
+    </div>
+    <div id="buttonNameSelection" style="display:none;">
+        <h2>Select Button Name</h2>
+        <input id="buttonName" class="form-control" type="text" value="Run" onChange="updateButtonName()"
+               onClick="updateButtonName()" onKeyUp="updateButtonName()"/>
+        <button id="buttonNameButton" class="btn btn-default">Run</button>
+        <br/>
+        <br/>
+        <button class="btn btn-default" onClick="saveButtonName()">Submit</button>
+        <br/>
+
+    </div>
+
+    <div id="buttonNameShow" style="display:none;">
+        <h2>Selected Button</h2>
+        <button id="buttonNameShowButton" class="btn btn-default">Run</button>
+    </div>
+
+    <div id="iframeStyleSelection" style="display:none;">
+        <h2>Selected Style</h2>
+        <form>
+            <label>Width: </label>
+            <input id="iframeWidthSlider" data-slider-id='ex1Slider' type="text" data-slider-min="300"
+                   data-slider-max="800"
+                   data-slider-step="1" data-slider-value="300"/>
+            <br/>
+            <br/>
+            <label>Height: </label>
+            <input id="iframeHeightSlider" data-slider-id='ex2Slider' type="text" data-slider-min="200"
+                   data-slider-max="400" data-slider-step="1" data-slider-value="200"/>
+        </form>
+        <iframe id="iframeDemo" src="{{ path('iframe_index') }}"></iframe>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/jsoneditor.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('//api.filepicker.io/v2/filepicker.js') }}"></script>
+    <script src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-slider.js') }}"></script>
+    {% include 'AppBundle:Flash:js.html.twig' %}
+{% endblock %}
