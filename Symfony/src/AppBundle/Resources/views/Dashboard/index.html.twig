@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <!-- Custom CSS -->
+    {% include 'AppBundle:Dashboard:css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3>Welcome, {{ user.username }}.
+            {% if tier != null %}
+                Your current tier is {{ tier.tierName }}.
+            {% endif %}
+        </h3><br>
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped table-hover table-bordered">
+                <tbody>
+                <tr>
+                    <th scope="row">Total Flashes</th>
+                    <td>{{ user.totalFlashCount }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Successful Flashes</th>
+                    <td>{{ user.successfulFlashCount }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>You currently have {{ firmwares|length }} firmware{% if firmwares|length <= 1 %}. <a href="/flash">Upload a
+            firmware now!</a>{% elseif firmwares|length > 1 %}s.{% endif %}
+        </h3>
+        <br>
+        {% if firmwares|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="row">URL</th>
+                        <td>iFrame Height</td>
+                        <td>iFrame Width</td>
+                        <td>Button Name</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for firmware in firmwares %}
+                    <tr>
+                        <td><a href="/showinfo/{{ firmware.id }}">/showinfo/{{ firmware.id }}</a></td>
+                        <td>{{ firmware.iFrameHeight }}</td>
+                        <td>{{ firmware.iFrameWidth }}</td>
+                        <td>{{ firmware.buttonName }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}</h3>
+    </div>
+{% endblock %}
