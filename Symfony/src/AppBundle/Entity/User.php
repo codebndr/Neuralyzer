@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User
@@ -41,15 +42,19 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
-     * @Assert\Length(
-     *      min = 6,
-     *      minMessage = "Your email must be at least {{ limit }} characters long"
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
      * )
      */
     private $email;
 
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *      min = 6,
+     *      minMessage = "Your password must be at least {{ limit }} characters long"
+     * )
      *
      * @ORM\Column(name="password", type="string", length=255)
      */
@@ -59,25 +64,22 @@ class User implements UserInterface, \Serializable
      * @var int
      *
      * @ORM\Column(name="tier", type="integer")
-     *
-     * @Assert\Length(
-     *      min = 6,
-     *      minMessage = "Your password must be at least {{ limit }} characters long"
-     * )
+     * @ORM\ManyToOne(targetEntity="Tier", inversedBy="users")
+     * @ORM\JoinColumn(name="tier_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private $tier;
+    protected $tier;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="totalFlashCount", type="integer")
+     * @ORM\Column(name="totalFlashCount", type="integer", options={"default" = 0})
      */
     private $totalFlashCount;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="successfulFlashCount", type="integer")
+     * @ORM\Column(name="successfulFlashCount", type="integer", options={"default" = 0})
      */
     private $successfulFlashCount;
 
@@ -256,6 +258,10 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->email,
+            $this->tier,
+            $this->totalFlashCount,
+            $this->successfulFlashCount,
         ));
     }
 
@@ -266,6 +272,26 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->username,
             $this->password,
+            $this->email,
+            $this->tier,
+            $this->totalFlashCount,
+            $this->successfulFlashCount,
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Log", mappedBy="user")
+     */
+    protected $logs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="FirmwareConfig", mappedBy="user")
+     */
+    protected $firmwareConfigs;
+
+    public function __construct()
+    {
+        $this->logs = new ArrayCollection();
+        $this->firmwareConfigs = new ArrayCollection();
     }
 }

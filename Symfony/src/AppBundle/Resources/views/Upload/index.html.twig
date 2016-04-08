@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css') }}" rel="stylesheet"/>
+    <link rel='stylesheet' href="{{ asset('css/bootstrap-slider.css') }}">
+    {% include 'AppBundle:Upload:css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="hexSelection">
+                            <h2>Upload .hex file</h2>
+                            <iframe id='uploadFileModal' style="width:100%; height:600px; border: 0px;"></iframe>
+                        </div>
+                        <div id="hexShow" style="display:none;">
+                            <h2>Uploaded .hex file</h2>
+                            <input class="form-control" id="selectedFile" type="text" disabled/>
+                        </div>
+                        <div id="configSelection" style="display:none;">
+                            <h2>Select Board</h2>
+                            <select id="boardslist" onChange="valueChanged()" style="width: 100%">
+                                <option value="" disabled selected hidden>
+                                    Select a board
+                                </option>
+                            </select>
+                            <div id="selectBoardAlert" class="alert alert-danger alert-dismissible"
+                                 style="display:none;" role="alert">
+                                Please select a board!
+                            </div>
+                            <div id='editor_holder'></div>
+                            <button id="nextButton" class="btn btn-lg btn-primary btn-block"
+                                    onClick='showSelectStylePage()'>Next
+                            </button>
+                        </div>
+                        <div id="configShow" style="display:none;">
+                            <h2>Selected Config</h2>
+                        <pre id=selectedConfigOutput>
+                        </pre>
+                        </div>
+                        <div id="ispConfig" style="display:none;">
+                            <h2>Select ISP</h2>
+                            <select id="cb_cf_programmers" class="dropdown" onChange="ispValueChanged()">
+                            </select>
+                        </div>
+                        <div id="portConfig" style="display:none;">
+                            <select id="cb_cf_ports" class="dropdown">
+                            </select>
+                        </div>
+                        <div id="iframeStyleSelection" style="display:none;">
+                            <h2>Enter Desired Button Name</h2>
+                            <input id="buttonName" class="form-control" type="text" value="Run"
+                                   onChange="updateButtonName()"
+                                   onClick="updateButtonName()" onKeyUp="updateButtonName()"/>
+                            <h2>Select Desired iFrame's Height and Width</h2>
+                            <form>
+                                <label>Width: </label>
+                                <input id="iframeWidthSlider" onChange="updateWidth()" data-slider-id='ex1Slider'
+                                       type="text" data-slider-min="300" data-slider-max="800" data-slider-step="1"
+                                       data-slider-value="300"/>
+                                <br/><br/>
+                                <label>Height: </label>
+                                <input id="iframeHeightSlider" onChange="updateHeight()" data-slider-id='ex2Slider'
+                                       type="text" data-slider-min="200" data-slider-max="400" data-slider-step="1"
+                                       data-slider-value="200"/>
+                            </form>
+                            <h2>Enter Desired Background Image URL</h2>
+                            <input id="backgroundImage" class="form-control" type="text" value=""
+                                   onChange="updateBackgroundImage()"
+                                   onClick="updateBackgroundImage()" onKeyUp="updateBackgroundImage()"/>
+                            <h2>Live Preview</h2>
+                            <iframe id="iframeDemo" src="{{ path('upload_iframe') }}"></iframe>
+                            <br/>
+                            <br/>
+                        </div>
+                        {{ form_start(form) }}
+                        <div class="hidden">
+                            {{ form_widget(form.hexFileUrl, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.boardUploadConfig, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.buttonName, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.serialPortAutoDetect, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.iFrameWidth, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.iFrameHeight, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.iFrameBackground, {'attr': {'class': ''}}) }}
+                            {{ form_widget(form.iPProgrammer, {'attr': {'class': ''}}) }}
+                        </div>
+                        <button type="submit" id="submitButton" style="display:none;"
+                                class="btn btn-lg btn-primary btn-block"
+                                onClick="saveConfig()">Save Firmware Configurations
+                        </button>
+                        {{ form_end(form) }}
+                        {% for error in errors %}
+                            <p class="text-danger">{{ error.message }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('js/jsoneditor.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('//api.filepicker.io/v2/filepicker.js') }}"></script>
+        <script src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-slider.js') }}"></script>
+        {% include 'AppBundle:Upload:js.html.twig' %}
+    {% endblock %}

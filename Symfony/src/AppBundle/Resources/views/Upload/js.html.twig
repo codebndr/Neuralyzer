@@ -1,0 +1,173 @@
+<script type="text/javascript">
+    $("#iframeWidthSlider").slider({
+        tooltip: 'always'
+    });
+
+    $("#iframeWidthSlider").on("slide", function (slideEvt) {
+        $("#iframeDemo").css('width', slideEvt.value);
+    });
+
+    $("#iframeHeightSlider").slider({
+        tooltip: 'always'
+    });
+
+    $("#iframeHeightSlider").on("slide", function (slideEvt) {
+        $("#iframeDemo").css('height', slideEvt.value);
+    });
+    window.flashConfig = {};
+
+    $(document).ready(function () {
+        filepicker.setKey("AlFbsJlKCTImNl6LUUZOzz");
+
+        filepicker.pickAndStore(
+                {
+                    container: 'uploadFileModal',
+                    extension: ['.hex', '.ino'],
+                    services: ['COMPUTER'],
+                    multiple: false
+                },
+                {
+                    path: '/hex_files/user_id/'
+                },
+                function (Blobs) {
+                    window.flashConfig.url = Blobs[0].url;
+                    $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
+                    $("#iframeDemo").contents().find('#initCompiler').val("true");
+                    $("#iframeDemo").contents().find('#initCompiler').change();
+                    $("#hexSelection").hide();
+                    $("#selectedFile").val(Blobs[0].filename);
+                    $("#hexShow").show();
+
+                    $("#configSelection").show();
+                }
+        );
+
+        $('#boardslist').select2();
+        window.jsonEditor = new JSONEditor(document.getElementById('editor_holder'),
+                {
+                    schema: {
+                        title: "Board Config",
+                        type: "object",
+                        properties: {}
+                    },
+                    theme: 'bootstrap3',
+                    disable_edit_json: true,
+                    disable_collapse: true
+                });
+
+
+        window.jsonEditor.setValue(JSON.parse('{"protocol":"","maximum_size":"","speed":""}'));
+
+        $.get("https://codebender.cc/board/listboards", function (data) {
+
+            window.boards = JSON.parse(data);
+
+            for (var k in window.boards) {
+                if (window.boards.hasOwnProperty(k)) {
+                    $('#boardslist').append($('<optgroup>', {
+                        label: k,
+                        id: k.replace(/ /g, '')
+                    }));
+
+                    for (i = 0; i < window.boards[k].length; i++) {
+                        $('#' + k.replace(/ /g, '')).append($('<option>', {
+                            value: JSON.stringify(window.boards[k][i]['upload']),
+                            text: window.boards[k][i]['name'],
+                            build: JSON.stringify(window.boards[k][i]['build'])
+                        }));
+                    }
+                }
+            }
+        });
+
+        $.get("https://codebender.cc/board/programmers", function (data) {
+            window.programmers = JSON.parse(data);
+            for (i = 0; i < window.programmers.length; i++) {
+                if (window.programmers[i].name != 'Parallel Programmer') {
+                    $('#cb_cf_programmers').append($('<option>', {
+                        value: JSON.stringify(window.programmers[i]),
+                        text: window.programmers[i]['name']
+                    }));
+                }
+            }
+        });
+    });
+
+    function valueChanged() {
+        window.flashConfig.boardOptions = {};
+        window.flashConfig.boardOptions.name = $("#boardslist option:selected").text();
+        window.flashConfig.boardOptions.upload = $("#boardslist option:selected").val();
+        window.jsonEditor.setValue(JSON.parse(window.flashConfig.boardOptions.upload));
+        window.flashConfig.boardOptions.build = $("#boardslist option:selected").attr('build');
+    }
+
+    function ispValueChanged() {
+        window.flashConfig.boardOptions.programmer = JSON.parse($("#cb_cf_programmers option:selected").val());
+    }
+
+    function showSelectStylePage() {
+        if(window.flashConfig.boardOptions == null){
+            $("#selectBoardAlert").show();
+            $("#selectBoardAlert").fadeOut(2000);
+            return;
+        }
+        $("#configSelection").hide();
+        $("#selectedConfigOutput").text(JSON.stringify(window.jsonEditor.getValue(), null, 2));
+        $("#configShow").show();
+        if (typeof window.jsonEditor.getValue().protocol == "undefined") $("#ispConfig").show();
+
+        $("#buttonNameSelection").show();
+
+        $("#iframeStyleSelection").show();
+        $("#submitButton").show();
+
+        window.flashConfig.buttonName = $("#buttonName").val();
+
+        initIframeConfig();
+    }
+
+    function updateWidth() {
+        window.flashConfig.width = JSON.parse($("#iframeWidthSlider").val());
+    }
+
+    function updateHeight() {
+        window.flashConfig.height = JSON.parse($("#iframeHeightSlider").val());
+    }
+
+    function updateButtonName() {
+        window.flashConfig.buttonName = $("#buttonName").val();
+        $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
+        $("#iframeDemo").contents().find('#buttonName').change();
+    }
+
+    function updateBackgroundImage() {
+        window.flashConfig.backgroundImage = $("#backgroundImage").val();
+        $("#iframeDemo").contents().find('#backgroundImage').val(window.flashConfig.backgroundImage);
+        $("#iframeDemo").contents().find('#backgroundImage').change();
+    }
+
+    function initIframeConfig() {
+        $("#iframeDemo").contents().find('#hexFileUrl').val(window.flashConfig.url);
+        $("#iframeDemo").contents().find('#boardName').val(window.flashConfig.boardOptions.name);
+        $("#iframeDemo").contents().find('#boardConfig').val(window.flashConfig.boardOptions.upload);
+        $("#iframeDemo").contents().find('#boardBuild').val(window.flashConfig.boardOptions.build);
+        $("#iframeDemo").contents().find('#buttonName').val(window.flashConfig.buttonName);
+        if (window.flashConfig.boardOptions.programmer) {
+            $("#iframeDemo").contents().find('#programmerCommunication').val(window.flashConfig.boardOptions.programmer.communication);
+        }
+        $("#iframeDemo").contents().find('#startInitialization').val("true");
+        $("#iframeDemo").contents().find('#startInitialization').change();
+    }
+
+    function saveConfig(){
+        $('#firmware_hexFileUrl').attr('value',window.flashConfig.url);
+        $('#firmware_serialPortAutoDetect').attr('value',"false");
+        $('#firmware_boardUploadConfig').attr('value',JSON.stringify(window.flashConfig.boardOptions));
+        $('#firmware_buttonName').attr('value', window.flashConfig.buttonName);
+        $('#firmware_iFrameBackground').attr('value', window.flashConfig.backgroundImage?window.flashConfig.backgroundImage:"none");
+        $('#firmware_iFrameWidth').attr('value',JSON.parse($("#iframeWidthSlider").val()));
+        $('#firmware_iFrameHeight').attr('value',JSON.parse($("#iframeHeightSlider").val()));
+        $('#firmware_iPProgrammer').attr('value',window.flashConfig.boardOptions.programmer?window.flashConfig.boardOptions.programmer.communication:"null");
+    }
+
+</script>

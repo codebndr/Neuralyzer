@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <!-- Custom CSS -->
+    {% include 'AppBundle:ShowInfo:css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3> Firmware id #{{ firmware.id }}</h3>
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped table-hover table-bordered">
+                <tbody>
+                <tr>
+                    <td>Hex File Url</td>
+                    <td>{{ firmware.HexFileUrl }}</td>
+                </tr>
+                <tr>
+                    <td>Board Config</td>
+                    <td>{{ firmware.BoardUploadConfig|join }}</td>
+                </tr>
+                <tr>
+                    <td>IP Programmer</td>
+                    <td>{{ firmware.IPProgrammer|join }}</td>
+                </tr>
+                <tr>
+                    <td>Serial Port Auto Detect</td>
+                    <td>{{ firmware.SerialPortAutoDetect?'Yes':'No' }}</td>
+                </tr>
+                <tr>
+                    <td>Button Name</td>
+                    <td>{{ firmware.ButtonName }}</td>
+                </tr>
+                <tr>
+                    <td>iFrame Height</td>
+                    <td>{{ firmware.IFrameHeight }}</td>
+                </tr>
+                <tr>
+                    <td>iFrame Width</td>
+                    <td>{{ firmware.IFrameWidth }}</td>
+                </tr>
+                <tr>
+                    <td>iFrame Background</td>
+                    <td>{{ firmware.IFrameBackground }}</td>
+                </tr>
+                <tr>
+                    <td>iFrame URL</td>
+                    <td>{{ firmware.UniqueUrl }}/{{ firmware.id }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
