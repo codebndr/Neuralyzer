@@ -2,3 +2,5 @@ Symfony/composer.phar
 .idea/workspace.xml
 .idea/tasks.xml
 .vagrant
+
+Symfony/web/punchCardArray.csv

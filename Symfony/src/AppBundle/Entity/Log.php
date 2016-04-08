@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Logs
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\LogsRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LogRepository")
  *
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
@@ -48,14 +48,14 @@ class Log
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timestamp", type="datetime")
+     * @ORM\Column(name="timestamp", type="integer")
      */
     private $timestamp;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="ip", type="integer", options={"unsigned"=true})
+     * @ORM\Column(name="ip", type="string", length=255)
      */
     private $ip;
 
@@ -173,7 +173,7 @@ class Log
     /**
      * Set timestamp
      *
-     * @param \DateTime $timestamp
+     * @param int $timestamp
      *
      * @return Log
      */
@@ -187,7 +187,7 @@ class Log
     /**
      * Get timestamp
      *
-     * @return \DateTime
+     * @return int
      */
     public function getTimestamp()
     {
