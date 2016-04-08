@@ -23,6 +23,9 @@ class FirmwareConfig
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="owner", type="integer")
      * @ORM\ManyToOne(targetEntity="User", inversedBy="firmwareConfigs")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -52,7 +55,7 @@ class FirmwareConfig
     /**
      * @var bool
      *
-     * @ORM\Column(name="SerialPortAutoDetection", type="boolean")
+     * @ORM\Column(name="SerialPortAutoDetect", type="boolean")
      */
     private $serialPortAutoDetect;
 

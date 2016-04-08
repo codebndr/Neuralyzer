@@ -5,6 +5,7 @@ use AppBundle\Form\Type\RegistrationType;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegisterController extends Controller
@@ -24,16 +25,12 @@ class RegisterController extends Controller
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            ?>
-            <script type="text/javascript">
-                alert("The user account has been registered.");
-                window.location.href = "../";
-            </script>
-            <?php
+            $token = new UsernamePasswordToken($user, null, 'login', $user->getRoles());
+            $this->get('security.token_storage')->setToken($token);
+            $messages = ["You have been registered!"];
+            return $this->forward('AppBundle:Dashboard:show', array('messages' => $messages));
         }
 
-        return $this->render('AppBundle:Register:index.html.twig',
-            array('form' => $form->createView(), 'errors' => $errors));
+        return $this->render('AppBundle:Register:index.html.twig', array('form' => $form->createView(), 'errors' => $errors));
     }
 }

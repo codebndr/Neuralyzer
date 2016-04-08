@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Tier
@@ -186,5 +187,15 @@ class Tier
     public function getTierImage()
     {
         return $this->tierImage;
+    }
+
+    /**
+     * @ORM\OneToMany(targetEntity="User", mappedBy="tier")
+     */
+    protected $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
     }
 }

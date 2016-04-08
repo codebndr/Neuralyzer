@@ -26,3 +26,7 @@ security:
         secured_area:
             pattern: ^/
             form_login: ~
+    access_control:
+        - { path: ^/dashboard/, roles: ROLE_USER }
+        - { path: ^/showinfo/, roles: ROLE_USER }
+        - { path: ^/upload/, roles: ROLE_USER }

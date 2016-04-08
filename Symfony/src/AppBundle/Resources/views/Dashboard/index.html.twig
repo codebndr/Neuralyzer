@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <!-- Custom CSS -->
+    <link rel='stylesheet' href="{{ asset('//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css') }}">
+    {% include 'AppBundle:Dashboard:css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+        <h3>Welcome, {{ user.username }}.
+            {% if tier != null %}
+                Your current tier is {{ tier.tierName }}.
+            {% endif %}
+        </h3><br>
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped table-hover table-bordered">
+                <tbody>
+                <tr>
+                    <th scope="row">Total Flashes</th>
+                    <td>{{ user.totalFlashCount }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Successful Flashes</th>
+                    <td>{{ user.successfulFlashCount }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>You currently have {{ firmwares|length }} firmware{% if firmwares|length <= 1 %}. <a href="/upload">Upload a
+            firmware now!</a>{% elseif firmwares|length > 1 %}s.{% endif %}
+        </h3>
+        <br>
+        {% if firmwares|length > 0 %}
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped table-hover table-bordered">
+                <colgroup>
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="row">More Info</th>
+                    <td>Flash Page</td>
+                    <td>Button Name</td>
+                    <td>iFrame Height</td>
+                    <td>iFrame Width</td>
+                    <td>iFrame Background</td>
+                    <td>Embed Code</td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for firmware in firmwares %}
+                    <tr>
+                        <td><a href="/showinfo/{{ firmware.id }}">/showinfo/{{ firmware.id }}</a></td>
+                        <td><a href="/flash/{{ firmware.uniqueUrl }}">/flash/{{ firmware.uniqueUrl }}</a></td>
+                        <td>{{ firmware.buttonName }}</td>
+                        <td>{{ firmware.iFrameHeight }}</td>
+                        <td>{{ firmware.iFrameWidth }}</td>
+                        <td>{% if firmware.iFrameBackground == "none" %}
+                                none
+                            {% else %}
+                                <a href="{{ firmware.iFrameBackground }}" data-lightbox="image-1">View</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn"
+                                    data-clipboard-text='<iframe src="{{ app.request.getSchemeAndHttpHost() }}/flash/{{ firmware.uniqueUrl }}" width={{ firmware.iFrameWidth }} height={{ firmware.iFrameHeight }}></iframe>'>
+                                Copy to clipboard
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}</h3>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+            new Clipboard('.btn');
+        });
+    </script>
+{% endblock %}

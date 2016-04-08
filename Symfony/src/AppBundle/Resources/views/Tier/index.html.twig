@@ -24,10 +24,17 @@
                                 <h3>{{ tier.tierName|upper }} PLAN</h3>
                             </div>
                             <div class="panel-body text-center">
-                                <p class="lead" style="font-size:40px"><strong>{{ tier.price|price }} / month</strong></p>
+                                <p class="lead" style="font-size:40px"><strong>
+                                        {% if tier.price > 0 %}
+                                            {{ tier.price|price }} <br> / month
+                                        {% else %}
+                                            FREE!
+                                            <br><br>
+                                        {% endif %}
+                                    </strong> </p>
                             </div>
                             <ul class="list-group list-group-flush text-center">
-                                <li class="list-group-item"><i class="icon-ok text-danger"></i> {{ tier.tierName }} use
+                                <li class="list-group-item"><i class="icon-ok text-danger"></i> {{ tier.description }}
                                 </li>
                                 <li class="list-group-item"><i class="icon-ok text-danger"></i> Unlimited firmwares</li>
                                 <li class="list-group-item"><i
