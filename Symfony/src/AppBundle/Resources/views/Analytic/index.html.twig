@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+    {% include 'AppBundle:Analytic:css.html.twig' %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3>Activity Punch Card</h3>
+        <div id="activityChart"></div>
+        <h3>Logs</h3><br>
+        {% if logs|length > 0 %}
+        <div class="table-responsive">
+            <table id="logsTable" class="table table-condensed table-striped table-hover table-bordered tablesorter">
+                <thead>
+                <tr>
+                    <th>Log Description</th>
+                    <th>Timestamp</th>
+                    <th>IP Address</th>
+                    <th>Session ID</th>
+                    <th>Has Previous Session</th>
+                    <th>Browser</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for log in logs %}
+                    <tr>
+                        <td>{{ log.readableLogType }}</td>
+                        <td>{{ log.timestamp|date }}</td>
+                        <td>{{ log.ip }}</td>
+                        <td>{{ log.session }}</td>
+                        <td>{{ log.hasPreviousSession?'Yes':'No' }}</td>
+                        <td>{{ log.browser }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}</h3>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+    {% include 'AppBundle:Analytic:js.html.twig' %}
+    <script>
+        $(document).ready(function () {
+            $('#logsTable').DataTable();
+        });
+    </script>
+{% endblock %}
