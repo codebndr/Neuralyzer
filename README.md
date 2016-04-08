@@ -18,6 +18,11 @@ This will create a new VM instance with Ubuntu Trusty (14.04 LTS), install all d
 * Run ```vagrant ssh```
 
 This will ssh you into the VM that you just created, so that you can run Symfony's PHP Web Server
+If you are running vagrant for the first time, remember to set the directory path for php_browscap.ini in ```php.ini```.
+* Find your ```php.ini``` file and open it with your favourite editor
+* Append the following:
+```[browscap]```
+```browscap = "/vagrant/php_browscap.ini"```
 
 #### 3. Run the Symfony Web Server
 
@@ -26,17 +31,16 @@ This will ssh you into the VM that you just created, so that you can run Symfony
 * Run ```php bin/console doctrine:schema:create``` to create the schema
 * Run ```php bin/console server:run``` to run the Symfony Web Server
 
-
 #### 4. Connect to the website from your Host computer
 
 * Open your browser of choice
-* Open ```localhost:8889/```
+* Open ```localhost:8080/```
 * Enjoy
 
 
 Note: The Symfony Web server runs locally on port 8000. However, we have an nginx server running as a reverse proxy on port 8080, that forward the requests to the Symfony Web Server. On top of that, Vagrant is set up to forward port 8080 of the Guest VM to port 8889 of the Host machine, so for all intents and purposes, that's what you should use
 
-Note #2: You should also be able to use ```localhost:8889/app_dev.php/``` that uses a dev environment. This will (mostly) not use cache, and it will give you a good error output that helps with development
+Note #2: You should also be able to use ```localhost:8080/app_dev.php/``` that uses a dev environment. This will (mostly) not use cache, and it will give you a good error output that helps with development
 
 ##### 5. Make Changes and Commit
 
