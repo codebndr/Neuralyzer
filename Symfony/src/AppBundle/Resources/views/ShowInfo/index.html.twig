@@ -21,7 +21,7 @@
                 </tr>
                 <tr>
                     <td>IP Programmer</td>
-                    <td>{{ firmware.IPProgrammer|join }}</td>
+                    <td>{{ (firmware.IPProgrammer|join)=="null"?"None":firmware.IPProgrammer|join }}</td>
                 </tr>
                 <tr>
                     <td>Serial Port Auto Detect</td>
@@ -44,8 +44,8 @@
                     <td>{{ firmware.IFrameBackground }}</td>
                 </tr>
                 <tr>
-                    <td>iFrame URL</td>
-                    <td>{{ firmware.UniqueUrl }}/{{ firmware.id }}</td>
+                    <td>Flash Url</td>
+                    <td>/flash/{{ firmware.UniqueUrl }}</td>
                 </tr>
                 </tbody>
             </table>

@@ -55,7 +55,12 @@
                             <input id="buttonName" class="form-control" type="text" value="Run"
                                    onChange="updateButtonName()"
                                    onClick="updateButtonName()" onKeyUp="updateButtonName()"/>
+                            <div id="emptyButtonAlert" class="alert alert-danger alert-dismissible"
+                                 style="display:none;" role="alert">
+                                Please enter a button name!
+                            </div>
                             <h2>Select Desired iFrame's Height and Width</h2>
+                            <br>
                             <form>
                                 <label>Width: </label>
                                 <input id="iframeWidthSlider" onChange="updateWidth()" data-slider-id='ex1Slider'
