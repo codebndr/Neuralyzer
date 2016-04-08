@@ -22,6 +22,8 @@ This will ssh you into the VM that you just created, so that you can run Symfony
 #### 3. Run the Symfony Web Server
 
 * Run ```cd /vagrant/Symfony``` to go to the Symfony folder
+* Run ```php bin/console doctrine:database:create``` to create the database
+* Run ```php bin/console doctrine:schema:create``` to create the schema
 * Run ```php bin/console server:run``` to run the Symfony Web Server
 
 

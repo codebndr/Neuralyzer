@@ -160,6 +160,11 @@
     }
 
     function saveConfig(){
+        if($('#buttonName').val() == ""){
+            $("#emptyButtonAlert").show();
+            $("#emptyButtonAlert").fadeOut(2000);
+            return;
+        }
         $('#firmware_hexFileUrl').attr('value',window.flashConfig.url);
         $('#firmware_serialPortAutoDetect').attr('value',"false");
         $('#firmware_boardUploadConfig').attr('value',JSON.stringify(window.flashConfig.boardOptions));
