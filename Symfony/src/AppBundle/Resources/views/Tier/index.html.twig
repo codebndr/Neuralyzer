@@ -26,7 +26,7 @@
                             <div class="panel-body text-center">
                                 <p class="lead" style="font-size:40px"><strong>
                                         {% if tier.price > 0 %}
-                                            {{ tier.price|price }} <br> / month
+                                            {{ tier.price|price(2) }} <br> / month
                                         {% else %}
                                             FREE!
                                             <br><br>
