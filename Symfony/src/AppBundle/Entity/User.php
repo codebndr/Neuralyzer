@@ -6,12 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- *
+ * @UniqueEntity(fields="email", message="Email is already in use")
+ * @UniqueEntity(fields="username", message="Username is already in use")
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
 class User implements UserInterface, \Serializable

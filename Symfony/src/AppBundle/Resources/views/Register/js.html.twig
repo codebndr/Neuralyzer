@@ -1,0 +1,17 @@
+<script>
+    $(document).ready(function () {
+        $("#registerButton").prop('disabled', true);
+        $("#registration_password_second").keyup(checkPasswordMatch);
+    });
+    function checkPasswordMatch() {
+        var password = $("#registration_password_first").val();
+        var confirmPassword = $("#registration_password_second").val();
+        if (password == confirmPassword) {
+            $("#differentPasswordAlert").fadeOut(500);
+            $("#registerButton").prop('disabled', false);
+            return;
+        }
+        $("#registerButton").prop('disabled', true);
+        $("#differentPasswordAlert").show();
+    }
+</script>
