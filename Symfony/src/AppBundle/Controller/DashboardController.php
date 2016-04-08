@@ -19,8 +19,11 @@ class DashboardController extends Controller
         $tier = $this->getDoctrine()
             ->getRepository('AppBundle:Tier')
             ->find($user->getTier());
+        $tiers = $this->getDoctrine()
+            ->getRepository('AppBundle:Tier')
+            ->findAll();
 
         return $this->render('AppBundle:Dashboard:index.html.twig',
-            array('user' => $user, 'firmwares' => $firmwares, 'tier' => $tier, 'messages' => $messages));
+            array('user' => $user, 'firmwares' => $firmwares, 'tier' => $tier, 'tiers' => $tiers, 'messages' => $messages));
     }
 }

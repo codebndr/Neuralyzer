@@ -47,10 +47,14 @@
                                 </div>
                                 <p class="help-block">Please confirm password</p>
                             </div>
+                            <div id="differentPasswordAlert" class="alert alert-danger alert-dismissible"
+                                 style="" role="alert">
+                                Passwords do not match!
+                            </div>
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit"
+                                    <button id="registerButton" class="btn btn-lg btn-primary btn-block" type="submit"
                                             name="register-button">Register
                                     </button>
                                 </div>
@@ -62,4 +66,8 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {% include 'AppBundle:Register:js.html.twig' %}
 {% endblock %}

@@ -28,7 +28,7 @@ class RegisterControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $crawler = $client->submit($form);
-        $this->assertEquals(500, $client->getResponse()->getStatusCode());
-        $this->assertContains("Duplicate entry 'alexyao999'", $crawler->text());
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertContains("is already in use", $crawler->text());
     }
 }

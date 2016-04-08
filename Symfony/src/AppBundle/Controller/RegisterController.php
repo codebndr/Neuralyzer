@@ -22,13 +22,17 @@ class RegisterController extends Controller
         if ($form->isSubmitted() && $form->isValid() && count($errors) == 0) {
             $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
             $user->setPassword($password)->setSuccessfulFlashCount(0)->setTotalFlashCount(0)->setTier(0);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            $token = new UsernamePasswordToken($user, null, 'login', $user->getRoles());
-            $this->get('security.token_storage')->setToken($token);
-            $messages = ["You have been registered!"];
-            return $this->forward('AppBundle:Dashboard:show', array('messages' => $messages));
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $token = new UsernamePasswordToken($user, null, 'login', $user->getRoles());
+                $this->get('security.token_storage')->setToken($token);
+                $messages = ["You have been registered!"];
+                return $this->forward('AppBundle:Dashboard:show', array('messages' => $messages));
+            } catch(\Exception $e){
+                $errors = $e;
+            }
         }
 
         return $this->render('AppBundle:Register:index.html.twig', array('form' => $form->createView(), 'errors' => $errors));
