@@ -1,0 +1,14 @@
+<script>
+    function tierValueChanged() {
+        $.ajax({
+            type: "POST",
+            url: "{{ path('update_tier', {'owner': user.id }) }}",
+            data: {
+                'tier': $("#changeTier").val()
+            }
+        }).done(function () {
+            $("#changeTier").val(0);
+            location.reload();
+        });
+    }
+</script>

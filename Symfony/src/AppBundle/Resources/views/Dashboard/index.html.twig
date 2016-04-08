@@ -15,7 +15,17 @@
             {% if tier != null %}
                 Your current tier is {{ tier.tierName }}.
             {% endif %}
-        </h3><br>
+        </h3>
+        <select id="changeTier" onChange="tierValueChanged()">
+            <option value="0" disabled selected hidden>
+                Change your tier
+            </option>
+            {% for curtier in tiers %}
+                <option value="{{ curtier.id }}" >
+                    {{ curtier.tierName }}
+                </option>
+            {% endfor %}
+        </select><br><br>
         <div class="table-responsive">
             <table class="table table-condensed table-striped table-hover table-bordered">
                 <tbody>
@@ -89,6 +99,7 @@
 {% block javascripts %}
     <script src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.8/clipboard.min.js') }}"></script>
+    {% include 'AppBundle:Dashboard:js.html.twig' %}
     <script type="text/javascript">
         $(document).ready(function ($) {
             new Clipboard('.btn');
