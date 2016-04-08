@@ -16,7 +16,7 @@ class UpdateTierController extends Controller
         $data = $request->request->all();
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository('AppBundle:User')->find($owner);
-        if ($data["tier"] != null && $data["tier"] > 0) {
+        if ($data["tier"] !== null && $data["tier"] > 0) {
             $user->setTier($data["tier"]);
         }
         $entityManager->flush();
